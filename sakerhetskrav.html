@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Säkerhetskrav K3 · Avvikelsehantering · Sundsvalls kommun</title>
+<meta name="description" content="Säkerhetskrav för hantering av information med konfidentialitet 3 (K3) — kravkatalog för avvikelsehanteringen inom välfärdssektorn i Sundsvalls kommun.">
+<style>
+  :root {
+    --bg: #0a0e16;
+    --bg-alt: #0e1420;
+    --panel: #111a2b;
+    --panel-border: #1e2c45;
+    --text: #d7e1f2;
+    --text-dim: #8fa1bd;
+    --text-faint: #5c6c88;
+    --accent: #3ddc97;
+    --accent-2: #4cc3ff;
+    --accent-3: #b58cff;
+    --warn: #ffb454;
+    --mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: rgba(61, 220, 151, 0.3); }
+
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(76, 195, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(76, 195, 255, 0.045) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 75%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(10, 14, 22, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .nav-inner {
+    max-width: 1080px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: 14px; color: var(--text);
+    text-decoration: none; white-space: nowrap;
+  }
+  .nav-logo .prompt { color: var(--accent); }
+  .nav-logo .cursor {
+    display: inline-block; width: 8px; height: 15px;
+    background: var(--accent); vertical-align: text-bottom; margin-left: 3px;
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .nav-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .nav-links a {
+    color: var(--text-dim); text-decoration: none; font-size: 14px;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* ---------- Hero ---------- */
+  header { padding: 72px 0 48px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 12.5px; color: var(--accent-2);
+    border: 1px solid rgba(76, 195, 255, 0.35);
+    background: rgba(76, 195, 255, 0.07);
+    padding: 5px 14px; border-radius: 999px; margin-bottom: 26px;
+  }
+  .badge .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 50% { opacity: 0.4; } }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.1; letter-spacing: -0.02em; font-weight: 800;
+    margin-bottom: 8px;
+  }
+  h1 .gradient {
+    background: linear-gradient(92deg, var(--accent) 5%, var(--accent-2) 55%, var(--accent-3) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero-sub {
+    font-size: clamp(1.02rem, 2vw, 1.2rem);
+    color: var(--text-dim); max-width: 48em; margin: 18px 0 0;
+  }
+
+  .toc {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px; margin-top: 40px;
+  }
+  .toc a {
+    display: flex; gap: 12px; align-items: baseline;
+    background: var(--panel); border: 1px solid var(--panel-border);
+    border-radius: 10px; padding: 12px 16px;
+    color: var(--text-dim); text-decoration: none; font-size: 0.9rem;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .toc a:hover { border-color: rgba(76, 195, 255, 0.45); color: var(--text); }
+  .toc .n { font-family: var(--mono); font-size: 12px; color: var(--accent); flex-shrink: 0; }
+
+  /* ---------- Sections ---------- */
+  section { padding: 56px 0 8px; }
+  section:last-of-type { padding-bottom: 56px; }
+  .kicker {
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.08em;
+    color: var(--accent); margin-bottom: 10px;
+  }
+  .kicker::before { content: "// "; color: var(--text-faint); }
+  h2 {
+    font-size: clamp(1.35rem, 3vw, 1.8rem);
+    letter-spacing: -0.01em; font-weight: 750; margin-bottom: 16px;
+  }
+  .section-intro { color: var(--text-dim); max-width: 48em; margin-bottom: 24px; font-size: 1rem; }
+
+  /* ---------- Tables ---------- */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    background: var(--panel);
+  }
+  table { width: 100%; border-collapse: collapse; min-width: 560px; }
+  th {
+    font-family: var(--mono); font-size: 11.5px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-faint); text-align: left;
+    padding: 12px 18px; border-bottom: 1px solid var(--panel-border);
+    background: rgba(16, 24, 39, 0.7);
+  }
+  td {
+    padding: 11px 18px; border-bottom: 1px solid rgba(30, 44, 69, 0.5);
+    font-size: 0.93rem; vertical-align: top;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(76, 195, 255, 0.04); }
+  td.id { font-family: var(--mono); font-size: 12.5px; color: var(--accent-2); white-space: nowrap; }
+  th.check, td.check { width: 100px; text-align: center; }
+
+  .note {
+    border-left: 3px solid var(--accent-3);
+    background: rgba(181, 140, 255, 0.06);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px; margin-top: 20px;
+    font-size: 0.92rem; color: var(--text-dim); max-width: 860px;
+  }
+  .note + .note { margin-top: 12px; }
+  .note strong { color: var(--text); }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--panel-border);
+    padding: 44px 0 56px; margin-top: 40px;
+  }
+  footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  footer p { font-size: 0.88rem; color: var(--text-faint); }
+  footer .mono { font-family: var(--mono); font-size: 12.5px; }
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><span class="prompt">~/sprint $</span> avvikelse<span class="cursor"></span></a>
+    <div class="nav-links">
+      <a href="index.html">← Sprintsidan</a>
+      <a href="#top">Säkerhetskrav</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="wrap">
+    <div class="badge"><span class="dot"></span> Sundsvalls kommun · Kravkatalog</div>
+    <h1>Säkerhetskrav <span class="gradient">K3</span></h1>
+    <p class="hero-sub">
+      Hantering av information med konfidentialitet 3 (K3) — alltså information där ett röjande
+      skulle ge allvarliga konsekvenser.
+    </p>
+    <div class="toc">
+      <a href="#s1"><span class="n">01</span> Informationsklassning och grundläggande arkitektur</a>
+      <a href="#s2"><span class="n">02</span> Identitet och behörighet</a>
+      <a href="#s3"><span class="n">03</span> Utvecklares och administratörers åtkomst till produktion</a>
+      <a href="#s4"><span class="n">04</span> Separation mellan produktion, test och utveckling</a>
+      <a href="#s5"><span class="n">05</span> Kryptering</a>
+      <a href="#s6"><span class="n">06</span> Applikationer, API:er och databaser</a>
+      <a href="#s7"><span class="n">07</span> Säker utvecklingsprocess och CI/CD</a>
+      <a href="#s8"><span class="n">08</span> Loggning och spårbarhet</a>
+      <a href="#s9"><span class="n">09</span> Backup, kontinuitet och återställning</a>
+      <a href="#s10"><span class="n">10</span> Leverantörer, SaaS och molntjänster</a>
+      <a href="#s11"><span class="n">11</span> K3 och AI-tjänster</a>
+      <a href="#s12"><span class="n">12</span> Incidenter och sårbarheter</a>
+    </div>
+  </div>
+</header>
+
+<section id="s1">
+  <div class="wrap">
+    <div class="kicker">sektion 01</div>
+    <h2>1. Informationsklassning och grundläggande arkitektur</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">K3-01</td><td>Informationsägare SKA vara identifierad för all K3-information.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-02</td><td>Informationsklassningen SKA vara genomförd innan utveckling eller anskaffning av ett system påbörjas.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-03</td><td>Systemägare och informationsägare SKA säkerställa att K3-kraven inkluderas i systemets arkitektur, utveckling och förvaltning.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-04</td><td>Det SKA finnas en dokumenterad riskanalys för system som behandlar K3-information.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-05</td><td>Informationsflöden för K3-data SKA dokumenteras, inklusive lagring, integrationer, loggning, säkerhetskopiering och externa mottagare.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-06</td><td>K3-information SKA separeras från information med lägre skyddsbehov när detta väsentligt minskar risken för obehörig åtkomst.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-07</td><td>System innehållande K3-information SKA placeras i nätverkssegment med kontrollerade och dokumenterade informationsflöden.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-08</td><td>Endast uttryckligen tillåtna nätverksflöden SKA tillåtas till och från K3-miljöer.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">MCFFS kräver informationsklassning, riskbaserat arbete och segmentering med endast godkända informationsflöden.</div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="wrap">
+    <div class="kicker">sektion 02</div>
+    <h2>2. Identitet och behörighet</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">K3-09</td><td>All åtkomst till K3-information SKA ske med individuell digital identitet.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-10</td><td>Delade personliga användarkonton FÅR INTE användas.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-11</td><td>Behörighet SKA baseras på principerna least privilege och need-to-know.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-12</td><td>En användare SKA endast få åtkomst till den K3-information och de funktioner som krävs för den aktuella arbetsuppgiften.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-13</td><td>MFA SKA användas för mänsklig åtkomst till system som behandlar K3-information.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-14</td><td>MFA SKA användas vid all privilegierad åtkomst och all extern fjärråtkomst.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-15</td><td>Phishing-resistent MFA, exempelvis FIDO2/WebAuthn eller motsvarande, BÖR användas för privilegierad åtkomst.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-16</td><td>Administrativa konton SKA vara separerade från användarens ordinarie konto.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-17</td><td>Behörigheter SKA tas bort omedelbart när behovet upphör.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-18</td><td>Privilegierade behörigheter SKA granskas minst varje månad. Övriga K3-behörigheter SKA granskas minst kvartalsvis.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-19</td><td>Systemkonton och maskinidentiteter SKA ges minsta möjliga behörighet och får inte användas interaktivt av människor.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-20</td><td>Autentiseringsuppgifter från produktion FÅR INTE återanvändas i utveckling, test eller utbildning.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">MCFFS 4 kap. 16–17 §§ kräver bland annat minsta nödvändiga behörighet, restriktiv systemadministrativ behörighet, separata produktionscredentials och MFA för system som behandlar information i behov av utökat skydd.</div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="wrap">
+    <div class="kicker">sektion 03</div>
+    <h2>3. Utvecklares och administratörers åtkomst till produktion</h2>
+    <p class="section-intro">Detta bör vara en av standardens viktigaste delar.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">K3-21</td><td>Utvecklare SKA normalt inte ha stående åtkomst till K3-produktionsdata.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-22</td><td>Rollen utvecklare SKA INTE i sig medföra rätt att läsa produktionsdata.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-23</td><td>Systemadministrativ åtkomst SKA separeras från behörighet att läsa verksamhetsdata där tekniken medger detta.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-24</td><td>Direkt åtkomst till produktionsdatabas med K3-data FÅR INTE ges som normal utvecklarbehörighet.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-25</td><td>Tillfällig produktionsåtkomst SKA ges genom en kontrollerad JIT-/PAM-/break-glass-process eller motsvarande.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-26</td><td>Tillfällig åtkomst SKA vara kopplad till ett dokumenterat ärende eller incident, namngiven person och definierat ändamål.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-27</td><td>Tillfällig åtkomst SKA godkännas av utsedd behörig roll och automatiskt upphöra efter fastställd tid. Normal maximal giltighetstid BÖR vara fyra timmar.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-28</td><td>Tillfällig åtkomst SKA begränsas till minsta möjliga system, funktion och data. Read-only ska användas när skrivbehörighet inte uttryckligen behövs.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-29</td><td>All användning av privilegierad K3-åtkomst SKA loggas på individnivå.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-30</td><td>Leverantörers privilegierade åtkomst SKA vara avstängd som normalläge och endast aktiveras för specifikt uppdrag.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-31</td><td>Privilegierad fjärradministration SKA ske från en förvaltad och säkerhetskontrollerad klient eller särskild administrativ miljö.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-32</td><td>K3-information FÅR INTE kopieras till utvecklares lokala datorer, privata lagringsytor eller andra ej godkända miljöer.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">Detta går längre än ordalydelsen i lagen på vissa punkter, men operationaliserar kraven på restriktiv administrativ behörighet, tidsbegränsning och spårbarhet. MCFFS anger uttryckligen att systemadministrativ behörighet ska tilldelas restriktivt och att leverantörers administrativa behörighet bör begränsas i både omfattning och tid.</div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="wrap">
+    <div class="kicker">sektion 04</div>
+    <h2>4. Separation mellan produktion, test och utveckling</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">K3-33</td><td>Produktion SKA vara tekniskt separerad från utvecklings-, test- och utbildningsmiljö.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-34</td><td>Produktionskonton, produktionscertifikat, produktionsnycklar och produktions-secrets FÅR INTE användas i utvecklings- eller testmiljö.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-35</td><td>Produktionsdata klassad K3 FÅR INTE användas i utvecklings-, demo- eller utbildningsmiljö som normal metod.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-36</td><td>Testdata SKA vara syntetisk, anonymiserad eller på annat sätt framställd så att den inte längre innehåller K3-information när detta är möjligt.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-37</td><td>Om verklig K3-data undantagsvis måste användas i test SKA miljön behandlas som K3-produktionsmiljö beträffande åtkomst, loggning och skydd.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-38</td><td>Sådan användning SKA tidsbegränsas och godkännas av informationsägare och informationssäkerhetsfunktion.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-39</td><td>K3-information SKA raderas från tillfälliga testmiljöer omedelbart efter avslutat ändamål, med beaktande av tillämpliga arkiv- och informationshanteringskrav.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">Separationen mellan produktions- och utvecklings-/testmiljö anges uttryckligen i MCFFS 4 kap. 12 §.</div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="wrap">
+    <div class="kicker">sektion 05</div>
+    <h2>5. Kryptering</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">K3-40</td><td>K3-information SKA krypteras vid överföring över nätverk.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-41</td><td>K3-information SKA som intern kommunal baslinje krypteras vid lagring, inklusive databaser, objektlagring, filsystem och säkerhetskopior.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-42</td><td>TLS 1.2 eller senare SKA användas. TLS 1.3 BÖR användas där det stöds.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-43</td><td>Äldre eller osäkra protokoll och kryptografiska algoritmer FÅR INTE användas.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-44</td><td>Kommunen SKA upprätthålla en separat aktuell kryptografisk profil som anger godkända algoritmer, protokoll och nyckellängder.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-45</td><td>Krypteringsnycklar SKA lagras och hanteras separat från den information de skyddar.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-46</td><td>Nycklar och secrets SKA hanteras via godkänd KMS, HSM, secrets manager eller motsvarande central funktion.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-47</td><td>Krypteringsnycklar FÅR INTE lagras i källkod, container-images, konfigurationsfiler i klartext eller ärendehanteringssystem.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-48</td><td>Åtkomst till kryptografiska nycklar SKA vara separat behörighetsstyrd och loggad.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-49</td><td>Nycklar SKA kunna roteras och återkallas.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-50</td><td>Säkerhetsloggar och autentiseringsuppgifter SKA skyddas med kryptering vid överföring.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">MCFFS 4 kap. 25 § kräver en riskbaserad hantering av krypteringsbehovet och kräver kryptering av bland annat information i behov av utökat skydd när den överförs till system utanför den digitala miljön. Det allmänna rådet anger också kryptering vid lagring för information i behov av utökat skydd och kontrollerad nyckelhantering. GDPR artikel 32 pekar dessutom uttryckligen ut pseudonymisering och kryptering som möjliga riskanpassade säkerhetsåtgärder för personuppgifter.</div>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="wrap">
+    <div class="kicker">sektion 06</div>
+    <h2>6. Applikationer, API:er och databaser</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">K3-51</td><td>Autentisering och behörighetskontroll SKA genomföras server-side. Klientens uppgift om behörighet får aldrig ensam betraktas som betrodd.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-52</td><td>API:er SKA kontrollera behörighet för varje relevant operation och resurs.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-53</td><td>K3-information FÅR INTE exponeras genom publikt åtkomliga API:er utan autentisering.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-54</td><td>K3-information BÖR INTE placeras i URL:er eller query-parametrar eftersom dessa lätt hamnar i loggar, historik och mellanliggande system.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-55</td><td>Service-till-service-kommunikation med K3-information SKA använda stark autentisering, exempelvis OAuth2/OIDC-baserade maskinidentiteter, mTLS eller motsvarande.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-56</td><td>Kortlivade tokens och credentials BÖR användas framför långlivade statiska nycklar.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-57</td><td>Databasanvändare för applikationer SKA vara separerade från administrativa databaskonton.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-58</td><td>Databaser SKA vara åtkomliga endast från godkända system och administrativa anslutningsvägar.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-59</td><td>Felmeddelanden från externa gränssnitt FÅR INTE exponera K3-information, secrets, stack traces eller intern systeminformation.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-60</td><td>Endast de K3-data som krävs för aktuell funktion SKA hämtas och exponeras.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="wrap">
+    <div class="kicker">sektion 07</div>
+    <h2>7. Säker utvecklingsprocess och CI/CD</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">K3-61</td><td>System som behandlar K3-information SKA utvecklas enligt etablerad metod för säker utveckling.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-62</td><td>Kodändringar till produktionssystem SKA versionshanteras och vara spårbara till person och ändringsärende.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-63</td><td>Kod till säkerhetskritiska delar SKA granskas av annan person innan produktionssättning.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-64</td><td>Produktionsbranch SKA vara skyddad mot obehöriga direktändringar.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-65</td><td>Secrets FÅR INTE lagras i Git-repository, pipelineskript eller motsvarande.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-66</td><td>CI/CD-system SKA använda separata maskinidentiteter för produktion och andra miljöer.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-67</td><td>En utvecklare BÖR INTE genom sin vanliga utvecklaridentitet både kunna ändra programkod och självständigt kringgå produktionssättningens säkerhetskontroller.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-68</td><td>SAST, dependency scanning och secret scanning SKA genomföras automatiskt i byggprocessen.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-69</td><td>Säkerhetstester SKA genomföras före första produktionssättning och efter säkerhetsmässigt betydande förändringar.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-70</td><td>Kända kritiska sårbarheter SKA åtgärdas eller riskaccepteras uttryckligen innan produktionssättning.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-71</td><td>Komponenter och beroenden SKA inventeras så att berörda system snabbt kan identifieras vid nyupptäckta sårbarheter. SBOM BÖR användas där det är praktiskt möjligt.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">Cybersäkerhetslagen omfattar uttryckligen säkerhet vid förvärv, utveckling och underhåll, och MCFFS kräver bland annat informationsklassning, riskanalys och etablerade metoder för säker utveckling samt säkerhetstester och granskningar.</div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="wrap">
+    <div class="kicker">sektion 08</div>
+    <h2>8. Loggning och spårbarhet</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">K3-72</td><td>Åtkomst till K3-information SKA säkerhetsloggas.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-73</td><td>Loggen SKA, där det är relevant, kunna visa vem som fick åtkomst, vilken information eller resurs som berördes, vilken åtgärd som utfördes och när den utfördes.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-74</td><td>Användning av administrativa rättigheter SKA loggas.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-75</td><td>Behörighetsförändringar SKA loggas.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-76</td><td>Misslyckade och misstänkt obehöriga åtkomstförsök SKA loggas.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-77</td><td>Säkerhetsloggar SKA skickas till ett centralt, åtkomstskyddat logg-/SIEM-system när detta är tekniskt möjligt.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-78</td><td>Den som administrerar ett K3-system BÖR INTE ensam kunna förändra eller radera säkerhetsloggen över sina egna aktiviteter.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-79</td><td>Loggar SKA analyseras med ett intervall baserat på risk. Relevant misstänkt aktivitet ska generera larm.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-80</td><td>Säkerhetsloggar SKA ha en dokumenterad lagringstid som är tillräcklig för incidentutredning och rättsliga krav.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-81</td><td>Applikationsloggar FÅR INTE innehålla lösenord, autentiseringstokens, kryptografiska nycklar eller mer K3-information än vad som är nödvändigt.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">MCFFS 4 kap. 21 § anger uttryckligen säkerhetsloggning av bland annat systemåtkomst, systemadministrativa rättigheter, behörighetsförändringar och åtkomst till information i behov av utökat skydd. Loggarna ska dessutom skyddas och analyseras.</div>
+  </div>
+</section>
+
+<section id="s9">
+  <div class="wrap">
+    <div class="kicker">sektion 09</div>
+    <h2>9. Backup, kontinuitet och återställning</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">K3-82</td><td>Säkerhetskopior innehållande K3-information SKA ha minst samma konfidentialitetsskydd som originalinformationen.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-83</td><td>K3-backup SKA krypteras.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-84</td><td>Minst en återställningsbar kopia SKA vara logiskt eller fysiskt separerad så att kompromettering av produktionsmiljön inte automatiskt komprometterar samtliga kopior.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-85</td><td>Återställning SKA testas regelbundet.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-86</td><td>RTO och RPO SKA fastställas utifrån informations- och verksamhetsklassning.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-87</td><td>Åtkomst till backup SKA vara särskilt behörighetsstyrd och loggad.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">MCFFS kräver att information ska kunna återställas inom fastställda tider och anger som allmänt råd bland annat att minst en säkerhetskopia bör skyddas genom separation från källsystemet.</div>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="wrap">
+    <div class="kicker">sektion 10</div>
+    <h2>10. Leverantörer, SaaS och molntjänster</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">K3-88</td><td>Informationsklassning och riskanalys SKA genomföras innan K3-information läggs hos extern leverantör.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-89</td><td>Leverantören SKA kontraktuellt omfattas av minst de säkerhetskrav som är relevanta för den del leverantören utför.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-90</td><td>Kommunen SKA känna till vilka underleverantörer som kan behandla eller få åtkomst till K3-information.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-91</td><td>Geografisk plats och jurisdiktion för behandling, lagring, backup och supportåtkomst SKA vara kända och riskbedömda.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-92</td><td>Leverantörens personal SKA INTE ha generell permanent åtkomst till K3-information.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-93</td><td>Supportåtkomst SKA vara personlig, MFA-skyddad, tidsbegränsad och loggad.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-94</td><td>Avtalet SKA innehålla krav på incidentrapportering till kommunen.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-95</td><td>Avtalet SKA ge kommunen möjlighet att följa upp leverantörens efterlevnad av säkerhetskraven.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-96</td><td>Avtalet SKA reglera återlämning, migrering och säker radering av kommunens information när avtalet upphör.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-97</td><td>Leverantörsberoenden och exitmöjlighet SKA analyseras innan tjänsten tas i bruk.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-98</td><td>Kommunen SKA kunna avveckla leverantörens konton och åtkomst utan leverantörens medverkan eller inom en dokumenterat accepterad tidsperiod.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-99</td><td>Personuppgiftsbiträdesavtal SKA finnas när leverantören behandlar personuppgifter som personuppgiftsbiträde.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-100</td><td>För sekretessbelagda uppgifter SKA en separat OSL-bedömning göras innan extern åtkomst eller behandling tillåts.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">MCFFS ställer uttryckliga krav på riskbedömning före utkontraktering, att leverantören kan uppfylla relevanta säkerhetskrav under avtalstiden samt att avtalen möjliggör att säkerhetsåtgärder upprätthålls över tid. De allmänna råden tar bland annat upp underleverantörer, incidenter, uppföljning och återlämning eller förstöring av information.</div>
+    <div class="note">För sekretessbelagda kommunala uppgifter är OSL-bedömningen separat från GDPR och informationssäkerhetsbedömningen. 10 kap. 2 a § OSL medger under vissa förutsättningar utlämnande till en aktör som endast tekniskt bearbetar eller lagrar uppgiften, om utlämnandet inte är olämpligt.</div>
+  </div>
+</section>
+
+<section id="s11">
+  <div class="wrap">
+    <div class="kicker">sektion 11</div>
+    <h2>11. K3 och AI-tjänster</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">K3-101</td><td>K3-information FÅR INTE skickas till en extern generativ AI-tjänst som inte uttryckligen godkänts för K3.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-102</td><td>Ett vanligt konsumentkonto hos en AI-tjänst FÅR INTE användas för behandling av K3-information.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-103</td><td>Innan K3-information behandlas av en AI-tjänst SKA leverantör, datalagring, supportåtkomst, underleverantörer, dataplacering och avtalsvillkor riskbedömas.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-104</td><td>Kommunens K3-information FÅR INTE användas för leverantörens generella modellträning eller andra egna ändamål.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-105</td><td>Prompter, bifogade dokument, embeddings, vektordatabaser, konversationshistorik och genererade svar SKA betraktas som K3 om de innehåller eller kan återskapa K3-information.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-106</td><td>Samma krav på kryptering, åtkomstkontroll, loggning, retention och radering SKA tillämpas på AI-relaterad databehandling som på annan K3-behandling.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-107</td><td>RAG-/vektordatabaser SKA implementera behörighetskontroll som förhindrar att användaren genom AI-gränssnittet får information som denne inte hade rätt att läsa i källsystemet.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Det sista kravet är särskilt viktigt:</strong> AI får inte bli en bakdörr runt ordinarie informationsbehörighet.</div>
+  </div>
+</section>
+
+<section id="s12">
+  <div class="wrap">
+    <div class="kicker">sektion 12</div>
+    <h2>12. Incidenter och sårbarheter</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">K3-108</td><td>Misstänkt obehörig åtkomst till K3-information SKA behandlas som en informationssäkerhetsincident.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-109</td><td>Incidentfunktionen SKA omedelbart kunna spärra användare, tokens, certifikat och administrativa sessioner.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-110</td><td>Relevant bevismaterial och säkerhetsloggar SKA säkras innan system återställs om detta kan göras utan att förvärra incidenten.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-111</td><td>Incidenten SKA bedömas mot rapporteringskraven i cybersäkerhetslagen, GDPR och eventuell sektorslagstiftning.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-112</td><td>Kritiska säkerhetsuppdateringar SKA hanteras skyndsamt genom en dokumenterad sårbarhetsprocess.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-113</td><td>System vars mjukvara inte längre får säkerhetsuppdateringar SKA avvecklas, uppgraderas eller omfattas av dokumenterade kompenserande åtgärder och accepterad risk.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">Cybersäkerhetslagen kräver tidig information om betydande incidenter senast inom 24 timmar och en incidentanmälan normalt senast inom 72 timmar. Personuppgiftsincidenter omfattas samtidigt av GDPR:s separata 72-timmarsregel när förutsättningarna för anmälningsskyldighet är uppfyllda.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <p class="mono">avvikelse-tech-sprint · Sundsvalls kommun</p>
+      <p>Säkerhetskrav K3 — kravkatalog för avvikelsehanteringen inom välfärdssektorn.</p>
+    </div>
+    <div>
+      <p><a href="index.html">← Till sprintsidan</a></p>
+      <p class="mono">// 113 krav · 12 sektioner</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -157,6 +157,7 @@
   tbody tr:hover { background: rgba(76, 195, 255, 0.04); }
   td.id { font-family: var(--mono); font-size: 12.5px; color: var(--accent-2); white-space: nowrap; }
   th.check, td.check { width: 100px; text-align: center; }
+  td.check .ok { color: var(--accent); font-weight: 700; font-size: 1rem; }
 
   .note {
     border-left: 3px solid var(--accent-3);
@@ -275,12 +276,12 @@
       <table>
         <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-01</td><td>Informationsägare SKA vara identifierad för all K3-information.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-02</td><td>Informationsklassningen SKA vara genomförd innan utveckling eller anskaffning av ett system påbörjas.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-03</td><td>Systemägare och informationsägare SKA säkerställa att K3-kraven inkluderas i systemets arkitektur, utveckling och förvaltning.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-04</td><td>Det SKA finnas en dokumenterad riskanalys för system som behandlar K3-information.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-01</td><td>Informationsägare SKA vara identifierad för all K3-information.</td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-02</td><td>Informationsklassningen SKA vara genomförd innan utveckling eller anskaffning av ett system påbörjas.</td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-03</td><td>Systemägare och informationsägare SKA säkerställa att K3-kraven inkluderas i systemets arkitektur, utveckling och förvaltning.</td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-04</td><td>Det SKA finnas en dokumenterad riskanalys för system som behandlar K3-information.</td><td class="check"><span class="ok">✓</span></td></tr>
           <tr><td class="id">K3-05</td><td>Informationsflöden för K3-data SKA dokumenteras, inklusive lagring, integrationer, loggning, säkerhetskopiering och externa mottagare.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-06</td><td>K3-information SKA separeras från information med lägre skyddsbehov när detta väsentligt minskar risken för obehörig åtkomst.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-06</td><td>K3-information SKA separeras från information med lägre skyddsbehov när detta väsentligt minskar risken för obehörig åtkomst.</td><td class="check"><span class="ok">✓</span></td></tr>
           <tr><td class="id">K3-07</td><td>System innehållande K3-information SKA placeras i nätverkssegment med kontrollerade och dokumenterade informationsflöden.</td><td class="check"></td></tr>
           <tr><td class="id">K3-08</td><td>Endast uttryckligen tillåtna nätverksflöden SKA tillåtas till och från K3-miljöer.</td><td class="check"></td></tr>
         </tbody>
@@ -298,10 +299,10 @@
       <table>
         <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-09</td><td>All åtkomst till K3-information SKA ske med individuell digital identitet.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-10</td><td>Delade personliga användarkonton FÅR INTE användas.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-11</td><td>Behörighet SKA baseras på principerna least privilege och need-to-know.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-12</td><td>En användare SKA endast få åtkomst till den K3-information och de funktioner som krävs för den aktuella arbetsuppgiften.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-09</td><td>All åtkomst till K3-information SKA ske med individuell digital identitet.</td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-10</td><td>Delade personliga användarkonton FÅR INTE användas.</td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-11</td><td>Behörighet SKA baseras på principerna least privilege och need-to-know.</td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-12</td><td>En användare SKA endast få åtkomst till den K3-information och de funktioner som krävs för den aktuella arbetsuppgiften.</td><td class="check"><span class="ok">✓</span></td></tr>
           <tr><td class="id">K3-13</td><td>MFA SKA användas för mänsklig åtkomst till system som behandlar K3-information.</td><td class="check"></td></tr>
           <tr><td class="id">K3-14</td><td>MFA SKA användas vid all privilegierad åtkomst och all extern fjärråtkomst.</td><td class="check"></td></tr>
           <tr><td class="id">K3-15</td><td>Phishing-resistent MFA, exempelvis FIDO2/WebAuthn eller motsvarande, BÖR användas för privilegierad åtkomst.</td><td class="check"></td></tr>

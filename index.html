@@ -289,6 +289,14 @@
   .log-entry p { font-size: 0.93rem; color: var(--text-dim); }
   .log-entry .placeholder { font-style: italic; color: var(--text-faint); }
 
+  /* ---------- Öppna frågor ---------- */
+  .question { border-left: 3px solid var(--warn); }
+  .q-owner {
+    display: block; margin-top: 14px;
+    font-family: var(--mono); font-size: 12.5px; color: var(--warn);
+  }
+  .q-owner::before { content: "ägare: "; color: var(--text-faint); }
+
   /* ---------- Footer ---------- */
   footer {
     border-top: 1px solid var(--panel-border);
@@ -314,6 +322,7 @@
       <a href="#team">Team</a>
       <a href="#schema">Veckan</a>
       <a href="#logg">Sprintlogg</a>
+      <a href="#fragor">Öppna frågor</a>
       <a href="sakerhetskrav.html">Säkerhetskrav</a>
     </div>
   </div>
@@ -682,6 +691,29 @@
         <div class="log-date">Fredag 14 aug</div>
         <h3>Demo &amp; överlämning</h3>
         <p class="placeholder">Fylls på under sprinten…</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fragor">
+  <div class="wrap">
+    <div class="kicker">öppna frågor</div>
+    <h2>Frågor vi behöver reda ut</h2>
+    <p class="section-intro">
+      Frågor som dykt upp under arbetet och som behöver ett svar. Varje fråga har en ägare
+      som ansvarar för att driva den framåt. Listan uppdateras löpande under sprinten.
+    </p>
+    <div class="cards">
+      <div class="card question">
+        <h3><span class="icon">🧪</span> Testdata</h3>
+        <p>Hur implementerar vi en generell hantering av testdata för alla processer inom VOF/IAF?</p>
+        <span class="q-owner">Niklas Rahm</span>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🔒</span> Datasäkerhet</h3>
+        <p>Lösningar för att minimera access till produktionsdata.</p>
+        <span class="q-owner">Pelle</span>
       </div>
     </div>
   </div>

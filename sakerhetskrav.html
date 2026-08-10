@@ -168,6 +168,16 @@
   .note + .note { margin-top: 12px; }
   .note strong { color: var(--text); }
 
+  /* ---------- Regelverk ---------- */
+  .law-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .law {
+    background: var(--panel); border: 1px solid var(--panel-border);
+    border-radius: 12px; padding: 20px 22px;
+  }
+  .law h3 { font-family: var(--mono); font-size: 0.95rem; color: var(--accent); margin-bottom: 4px; }
+  .law .expand { font-size: 0.82rem; color: var(--text-faint); margin-bottom: 10px; }
+  .law p { font-size: 0.9rem; color: var(--text-dim); }
+
   /* ---------- Footer ---------- */
   footer {
     border-top: 1px solid var(--panel-border);
@@ -202,6 +212,7 @@
       skulle ge allvarliga konsekvenser.
     </p>
     <div class="toc">
+      <a href="#regelverk"><span class="n">00</span> Regelverken bakom kraven</a>
       <a href="#s1"><span class="n">01</span> Informationsklassning och grundläggande arkitektur</a>
       <a href="#s2"><span class="n">02</span> Identitet och behörighet</a>
       <a href="#s3"><span class="n">03</span> Utvecklares och administratörers åtkomst till produktion</a>
@@ -217,6 +228,44 @@
     </div>
   </div>
 </header>
+
+<section id="regelverk">
+  <div class="wrap">
+    <div class="kicker">sektion 00</div>
+    <h2>Regelverken bakom kraven</h2>
+    <p class="section-intro">
+      Kraven i katalogen hänvisar till ett antal lagar, föreskrifter och modeller.
+      Här är en kort orientering om vad de är.
+    </p>
+    <div class="law-grid">
+      <div class="law">
+        <h3>Cybersäkerhetslagen</h3>
+        <p class="expand">Svensk lag som genomför EU:s NIS2-direktiv</p>
+        <p>Ställer krav på systematiskt och riskbaserat cybersäkerhetsarbete hos bland annat kommuner — inklusive säkerhet vid förvärv, utveckling och underhåll av system. Betydande incidenter ska tidigt rapporteras: en första varning inom 24 timmar och en incidentanmälan normalt inom 72 timmar.</p>
+      </div>
+      <div class="law">
+        <h3>MCFFS</h3>
+        <p class="expand">Myndigheten för civilt försvars författningssamling</p>
+        <p>Föreskrifter som konkretiserar cybersäkerhetslagens krav i praktiska säkerhetsåtgärder — informationsklassning, behörighetsstyrning, loggning, kryptering, separation av miljöer med mera. Paragrafhänvisningarna i kravkatalogen (t.ex. 4 kap. 21 §) pekar hit.</p>
+      </div>
+      <div class="law">
+        <h3>GDPR</h3>
+        <p class="expand">EU:s dataskyddsförordning</p>
+        <p>Reglerar all behandling av personuppgifter. Artikel 32 kräver riskanpassade säkerhetsåtgärder — till exempel pseudonymisering och kryptering — och personuppgiftsincidenter ska anmälas till Integritetsskyddsmyndigheten inom 72 timmar. När en leverantör behandlar personuppgifter för kommunens räkning krävs personuppgiftsbiträdesavtal (PuB-avtal).</p>
+      </div>
+      <div class="law">
+        <h3>OSL</h3>
+        <p class="expand">Offentlighets- och sekretesslagen (2009:400)</p>
+        <p>Reglerar vilka uppgifter i offentlig verksamhet som omfattas av sekretess — till exempel uppgifter om enskildas hälsa och personliga förhållanden inom vård och omsorg. 10 kap. 2 a § styr när sekretessbelagda uppgifter får lämnas ut till en aktör som endast tekniskt bearbetar eller lagrar dem, till exempel en molnleverantör.</p>
+      </div>
+      <div class="law">
+        <h3>K3 · KLASSA</h3>
+        <p class="expand">Informationsklassning enligt SKR:s modell</p>
+        <p>Kommunens information klassas utifrån konfidentialitet, riktighet och tillgänglighet. K3 är konfidentialitetsnivå 3 — information där ett röjande skulle ge allvarliga konsekvenser för verksamheten eller enskilda. Det är den klassningen som avgör att kraven på den här sidan gäller.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section id="s1">
   <div class="wrap">

@@ -674,11 +674,13 @@
         <h3>Uppstart</h3>
         <p>Dagen inleddes med ett uppstartsmöte där scopet för sprinten diskuterades, AI-demo-applikationen visades samt diskussionerna runt hur behörighetsstyrningen ska fungera inleddes.</p>
         <p>Jobbat med lösningen för behörighetshantering — diskussionstungt — utmaningar med datastruktur i Metakatalogen samt hur framtida omorganisationer ska hanteras, med mera.</p>
+        <p>Dessutom: testmiljö uppsatt, alla beroenden uppdaterade (ett par hundra säkerhetsvarningar åtgärdade) och stöd byggt i AccessMapper för att lagra behörigheter på personnivå utöver AD-grupper.</p>
       </div>
-      <div class="log-entry pending">
+      <div class="log-entry">
         <div class="log-date">Tisdag 11 aug</div>
-        <h3>Kärnflödet</h3>
-        <p class="placeholder">Fylls på under sprinten…</p>
+        <h3>Två parallella spår</h3>
+        <p>Planen för dagen: bygga ihop ett fungerande flöde där behörighetsstyrningen kan testas mot organisationen som den ser ut idag, och parallellt reda ut frågorna kring Metakatalogen och organisationsförändringar — bland annat genom en avstämning med systemförvaltaren för att förstå hur förändringar hanteras i praktiken.</p>
+        <p>Behörigheterna är ingen blocker för övriga delar: frontend fortsätter med handläggarvyerna (faser, beslut, tilldelning) och ett enklare admin-gränssnitt för tillfälliga behörigheter påbörjas.</p>
       </div>
       <div class="log-entry pending">
         <div class="log-date">Onsdag 12 aug</div>
@@ -717,6 +719,16 @@
         <h3><span class="icon">🔒</span> Datasäkerhet</h3>
         <p>Lösningar för att minimera access till produktionsdata.</p>
         <span class="q-owner">Pelle</span>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🗂️</span> Metakatalogen &amp; organisationsförändringar</h3>
+        <p>Hur väl speglar Metakatalogen verkligheten för VOF/IAF (strukturerna är inte enhetliga)? Ska den vara master, och hur fångar vi upp organisationsförändringar — manuellt eller via en loader-tjänst/schemajobb som synkar organisationsdata till AccessMapper?</p>
+        <span class="q-owner">Pelle</span>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🕓</span> Historik för behörigheter</h3>
+        <p>Hur ska tillfälliga behörigheter tidsbegränsas (giltig från–till, tas aldrig bort) och historiken bevaras så att det går att se vem som hade access till vad och när? Ligger ansvaret i AccessMapper eller separat?</p>
+        <span class="q-owner">ej utsedd ännu</span>
       </div>
     </div>
   </div>

@@ -142,7 +142,7 @@
     border-radius: 12px;
     background: var(--panel);
   }
-  table { width: 100%; border-collapse: collapse; min-width: 560px; }
+  table { width: 100%; border-collapse: collapse; min-width: 920px; }
   th {
     font-family: var(--mono); font-size: 11.5px; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.08em;
@@ -159,6 +159,33 @@
   td.id { font-family: var(--mono); font-size: 12.5px; color: var(--accent-2); white-space: nowrap; }
   th.check, td.check { width: 100px; text-align: center; }
   td.check .ok { color: var(--accent); font-weight: 700; font-size: 1rem; }
+
+  /* ---------- Påverkan-kolumn ---------- */
+  th.impact, td.impact { min-width: 300px; width: 36%; }
+  .imp { display: block; }
+  .imp + .imp { margin-top: 7px; }
+  .imp .how { color: var(--text-dim); font-size: 0.87rem; }
+  .tag {
+    display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 1px 8px; border-radius: 999px; white-space: nowrap;
+    border: 1px solid; margin-right: 7px; vertical-align: middle;
+  }
+  .t-utv { color: #4cc3ff; border-color: rgba(76, 195, 255, 0.4); background: rgba(76, 195, 255, 0.08); }
+  .t-app { color: #3ddc97; border-color: rgba(61, 220, 151, 0.4); background: rgba(61, 220, 151, 0.08); }
+  .t-inf { color: #b58cff; border-color: rgba(181, 140, 255, 0.4); background: rgba(181, 140, 255, 0.08); }
+  .t-rut { color: #ffb454; border-color: rgba(255, 180, 84, 0.4); background: rgba(255, 180, 84, 0.08); }
+  .t-sty { color: #ff7eb6; border-color: rgba(255, 126, 182, 0.4); background: rgba(255, 126, 182, 0.08); }
+  .t-avt { color: #5ce1d6; border-color: rgba(92, 225, 214, 0.4); background: rgba(92, 225, 214, 0.08); }
+
+  .legend {
+    background: var(--panel); border: 1px solid var(--panel-border);
+    border-radius: 12px; padding: 20px 22px; margin-top: 32px;
+  }
+  .legend h3 { font-size: 0.95rem; margin-bottom: 12px; }
+  .legend ul { list-style: none; display: grid; gap: 8px; }
+  .legend li { font-size: 0.88rem; color: var(--text-dim); }
+  .legend .tag { margin-right: 9px; }
 
   .note {
     border-left: 3px solid var(--accent-3);
@@ -232,6 +259,22 @@
       <a href="#s13"><span class="n">13</span> Riktighet och spårbarhet (R3)</a>
       <a href="#s14"><span class="n">14</span> Tillgänglighet (T2)</a>
     </div>
+    <div class="legend">
+      <h3>Så läser du kolumnen Påverkan</h3>
+      <p style="font-size:0.88rem; color:var(--text-dim); margin-bottom:14px;">
+        Varje krav är märkt med vad det påverkar och hur. Rutiner och styrning anges med
+        räckvidd: <em>team</em> = inom utvecklingsteamet, <em>org</em> = utanför teamet
+        (verksamhet, IT-drift, säkerhetsfunktion), <em>team+org</em> = både och.
+      </p>
+      <ul>
+        <li><span class="tag t-utv">Utveckling</span> Lösningen måste byggas på ett specifikt sätt — kod, datamodell, API-design, pipeline.</li>
+        <li><span class="tag t-app">Applikation</span> Den driftsatta applikationens funktioner eller konfiguration — t.ex. att databasen krypteras eller att ett API döljs i DevPortal.</li>
+        <li><span class="tag t-inf">Infrastruktur</span> Plattform, nätverk, miljöer och drift — segmentering, brandväggsregler, backup, övervakning.</li>
+        <li><span class="tag t-rut">Rutin</span> Arbetssätt som måste etableras och följas — granskningar, godkännandeflöden, tester.</li>
+        <li><span class="tag t-sty">Styrning</span> Beslut, ansvar och uppföljning — vem som beslutar, dokumenterar och följer upp.</li>
+        <li><span class="tag t-avt">Avtal</span> Krav som måste regleras i avtal med leverantör — PuB-avtal, exitvillkor, revisionsrätt.</li>
+      </ul>
+    </div>
   </div>
 </header>
 
@@ -290,16 +333,16 @@
     <h2>1. Informationsklassning och grundläggande arkitektur</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-01</td><td>Informationsägare SKA vara identifierad för all K3-information.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-02</td><td>Informationsklassningen SKA vara genomförd innan utveckling eller anskaffning av ett system påbörjas.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-03</td><td>Systemägare och informationsägare SKA säkerställa att K3-kraven inkluderas i systemets arkitektur, utveckling och förvaltning.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-04</td><td>Det SKA finnas en dokumenterad riskanalys för system som behandlar K3-information.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-05</td><td>Informationsflöden för K3-data SKA dokumenteras, inklusive lagring, integrationer, loggning, säkerhetskopiering och externa mottagare.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-06</td><td>K3-information SKA separeras från information med lägre skyddsbehov när detta väsentligt minskar risken för obehörig åtkomst.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-07</td><td>System innehållande K3-information SKA placeras i nätverkssegment med kontrollerade och dokumenterade informationsflöden.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-08</td><td>Endast uttryckligen tillåtna nätverksflöden SKA tillåtas till och från K3-miljöer.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-01</td><td>Informationsägare SKA vara identifierad för all K3-information.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Verksamheten måste utse och dokumentera informationsägare för avvikelsedatat.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-02</td><td>Informationsklassningen SKA vara genomförd innan utveckling eller anskaffning av ett system påbörjas.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Klassningen måste vara beslutad innan utveckling startar — en grind i projektprocessen.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-03</td><td>Systemägare och informationsägare SKA säkerställa att K3-kraven inkluderas i systemets arkitektur, utveckling och förvaltning.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · team+org</span><span class="how">Kravkatalogen måste följas upp löpande i arkitektur-, utvecklings- och förvaltningsbeslut.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-04</td><td>Det SKA finnas en dokumenterad riskanalys för system som behandlar K3-information.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Riskanalys måste genomföras, dokumenteras och hållas aktuell vid större förändringar.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-05</td><td>Informationsflöden för K3-data SKA dokumenteras, inklusive lagring, integrationer, loggning, säkerhetskopiering och externa mottagare.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team</span><span class="how">Teamet måste ta fram och underhålla en flödeskarta över lagring, integrationer, loggning, backup och externa mottagare.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-06</td><td>K3-information SKA separeras från information med lägre skyddsbehov när detta väsentligt minskar risken för obehörig åtkomst.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Datamodell och lagring måste utformas så att K3-data hålls åtskild från data med lägre klassning.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-07</td><td>System innehållande K3-information SKA placeras i nätverkssegment med kontrollerade och dokumenterade informationsflöden.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Systemet måste driftsättas i eget nätverkssegment med dokumenterade flöden.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-08</td><td>Endast uttryckligen tillåtna nätverksflöden SKA tillåtas till och från K3-miljöer.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Brandväggsregler enligt vitlista — all övrig trafik till och från miljön blockeras.</span></div></td><td class="check"></td></tr>
         </tbody>
       </table>
     </div>
@@ -313,20 +356,20 @@
     <h2>2. Identitet och behörighet</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-09</td><td>All åtkomst till K3-information SKA ske med individuell digital identitet.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-10</td><td>Delade personliga användarkonton FÅR INTE användas.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-11</td><td>Behörighet SKA baseras på principerna least privilege och need-to-know.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-12</td><td>En användare SKA endast få åtkomst till den K3-information och de funktioner som krävs för den aktuella arbetsuppgiften.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-13</td><td>MFA SKA användas för mänsklig åtkomst till system som behandlar K3-information.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-14</td><td>MFA SKA användas vid all privilegierad åtkomst och all extern fjärråtkomst.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-15</td><td>Phishing-resistent MFA, exempelvis FIDO2/WebAuthn eller motsvarande, BÖR användas för privilegierad åtkomst.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-16</td><td>Administrativa konton SKA vara separerade från användarens ordinarie konto.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-17</td><td>Behörigheter SKA tas bort omedelbart när behovet upphör.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-18</td><td>Privilegierade behörigheter SKA granskas minst varje månad. Övriga K3-behörigheter SKA granskas minst kvartalsvis.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-19</td><td>Systemkonton och maskinidentiteter SKA ges minsta möjliga behörighet och får inte användas interaktivt av människor.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-20</td><td>Autentiseringsuppgifter från produktion FÅR INTE återanvändas i utveckling, test eller utbildning.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-09</td><td>All åtkomst till K3-information SKA ske med individuell digital identitet.</td><td class="impact"><div class="imp"><span class="tag t-app">Applikation</span><span class="how">Inloggning måste ske via kommunens centrala identitetslösning (AD/OIDC) — inga lokala eller systemgemensamma konton.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-10</td><td>Delade personliga användarkonton FÅR INTE användas.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team+org</span><span class="how">Delade konton får aldrig skapas eller lämnas ut — gäller både utvecklingsteamet och verksamhetens användare.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-11</td><td>Behörighet SKA baseras på principerna least privilege och need-to-know.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Rollbaserad behörighetsmodell med minsta möjliga rättigheter måste byggas in i lösningen.</span></div><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Roller och tilldelning beslutas utifrån need-to-know.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-12</td><td>En användare SKA endast få åtkomst till den K3-information och de funktioner som krävs för den aktuella arbetsuppgiften.</td><td class="impact"><div class="imp"><span class="tag t-app">Applikation</span><span class="how">Behörighetsstyrning på funktions- och informationsnivå — t.ex. att en enhetschef bara ser sin enhets avvikelser.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-13</td><td>MFA SKA användas för mänsklig åtkomst till system som behandlar K3-information.</td><td class="impact"><div class="imp"><span class="tag t-app">Applikation</span><span class="how">Inloggningen måste kräva MFA via den centrala identitetslösningen.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-14</td><td>MFA SKA användas vid all privilegierad åtkomst och all extern fjärråtkomst.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">MFA måste aktiveras för admin- och fjärråtkomst — VPN, servrar, driftverktyg och molnkonsoler.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-15</td><td>Phishing-resistent MFA, exempelvis FIDO2/WebAuthn eller motsvarande, BÖR användas för privilegierad åtkomst.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">FIDO2-/WebAuthn-nycklar bör införas för administratörer och privilegierade roller.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-16</td><td>Administrativa konton SKA vara separerade från användarens ordinarie konto.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team+org</span><span class="how">Admin-arbete måste ske från separata konton — aldrig från det ordinarie användarkontot.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-17</td><td>Behörigheter SKA tas bort omedelbart när behovet upphör.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team+org</span><span class="how">Off-boarding- och behörighetsavslut måste ske direkt vid avslut eller ändrad roll, inte i efterhand.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-18</td><td>Privilegierade behörigheter SKA granskas minst varje månad. Övriga K3-behörigheter SKA granskas minst kvartalsvis.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team+org</span><span class="how">Återkommande behörighetsgranskning måste schemaläggas och dokumenteras — månadsvis för privilegierade konton, kvartalsvis för övriga.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-19</td><td>Systemkonton och maskinidentiteter SKA ges minsta möjliga behörighet och får inte användas interaktivt av människor.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Tjänstekonton måste skapas per tjänst med minimala rättigheter och interaktiv inloggning spärrad.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-20</td><td>Autentiseringsuppgifter från produktion FÅR INTE återanvändas i utveckling, test eller utbildning.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Separata credentials per miljö — pipelines och konfiguration får aldrig återanvända produktionens.</span></div></td><td class="check"></td></tr>
         </tbody>
       </table>
     </div>
@@ -341,20 +384,20 @@
     <p class="section-intro">Detta bör vara en av standardens viktigaste delar.</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-21</td><td>Utvecklare SKA normalt inte ha stående åtkomst till K3-produktionsdata.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-22</td><td>Rollen utvecklare SKA INTE i sig medföra rätt att läsa produktionsdata.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-23</td><td>Systemadministrativ åtkomst SKA separeras från behörighet att läsa verksamhetsdata där tekniken medger detta.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-24</td><td>Direkt åtkomst till produktionsdatabas med K3-data FÅR INTE ges som normal utvecklarbehörighet.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-25</td><td>Tillfällig produktionsåtkomst SKA ges genom en kontrollerad JIT-/PAM-/break-glass-process eller motsvarande.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-26</td><td>Tillfällig åtkomst SKA vara kopplad till ett dokumenterat ärende eller incident, namngiven person och definierat ändamål.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-27</td><td>Tillfällig åtkomst SKA godkännas av utsedd behörig roll och automatiskt upphöra efter fastställd tid. Normal maximal giltighetstid BÖR vara fyra timmar.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-28</td><td>Tillfällig åtkomst SKA begränsas till minsta möjliga system, funktion och data. Read-only ska användas när skrivbehörighet inte uttryckligen behövs.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-29</td><td>All användning av privilegierad K3-åtkomst SKA loggas på individnivå.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-30</td><td>Leverantörers privilegierade åtkomst SKA vara avstängd som normalläge och endast aktiveras för specifikt uppdrag.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-31</td><td>Privilegierad fjärradministration SKA ske från en förvaltad och säkerhetskontrollerad klient eller särskild administrativ miljö.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-32</td><td>K3-information FÅR INTE kopieras till utvecklares lokala datorer, privata lagringsytor eller andra ej godkända miljöer.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-21</td><td>Utvecklare SKA normalt inte ha stående åtkomst till K3-produktionsdata.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · team</span><span class="how">Utvecklares standardbehörighet får inte omfatta produktionsdata — påverkar hur teamet felsöker och supportar.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-22</td><td>Rollen utvecklare SKA INTE i sig medföra rätt att läsa produktionsdata.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · team</span><span class="how">Behörighetsmodellen för utvecklarrollen måste utformas utan läsrätt i produktion.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-23</td><td>Systemadministrativ åtkomst SKA separeras från behörighet att läsa verksamhetsdata där tekniken medger detta.</td><td class="impact"><div class="imp"><span class="tag t-app">Applikation</span><span class="how">Drift-/adminroller måste konfigureras utan åtkomst till verksamhetsdata där tekniken tillåter.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-24</td><td>Direkt åtkomst till produktionsdatabas med K3-data FÅR INTE ges som normal utvecklarbehörighet.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Nätverksvägar från utvecklarklienter till produktionsdatabasen måste stängas; åtkomst endast via kontrollerad process.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-25</td><td>Tillfällig produktionsåtkomst SKA ges genom en kontrollerad JIT-/PAM-/break-glass-process eller motsvarande.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">En JIT-/PAM-lösning måste införas för tillfällig, tidsbegränsad åtkomst.</span></div><div class="imp"><span class="tag t-rut">Rutin · team</span><span class="how">Processen för att begära och bevilja åtkomst måste etableras.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-26</td><td>Tillfällig åtkomst SKA vara kopplad till ett dokumenterat ärende eller incident, namngiven person och definierat ändamål.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team</span><span class="how">Varje åtkomstbegäran måste kopplas till ärende, namngiven person och ändamål.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-27</td><td>Tillfällig åtkomst SKA godkännas av utsedd behörig roll och automatiskt upphöra efter fastställd tid. Normal maximal giltighetstid BÖR vara fyra timmar.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team+org</span><span class="how">Godkännandeflöde med utsedd godkännare och automatisk tidsgräns (normalt 4 h) måste konfigureras.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-28</td><td>Tillfällig åtkomst SKA begränsas till minsta möjliga system, funktion och data. Read-only ska användas när skrivbehörighet inte uttryckligen behövs.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team</span><span class="how">Åtkomst beviljas smalast möjligt, med read-only som standardläge.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-29</td><td>All användning av privilegierad K3-åtkomst SKA loggas på individnivå.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Privilegierad åtkomst måste loggas per person, t.ex. via PAM-/sessionsloggning.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-30</td><td>Leverantörers privilegierade åtkomst SKA vara avstängd som normalläge och endast aktiveras för specifikt uppdrag.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · org</span><span class="how">Leverantörskonton hålls inaktiverade och aktiveras endast per uppdrag, med avtalad process.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-31</td><td>Privilegierad fjärradministration SKA ske från en förvaltad och säkerhetskontrollerad klient eller särskild administrativ miljö.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Administration endast från förvaltade klienter eller särskild administrativ miljö.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-32</td><td>K3-information FÅR INTE kopieras till utvecklares lokala datorer, privata lagringsytor eller andra ej godkända miljöer.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team</span><span class="how">Arbetssätt där K3-data aldrig lämnar godkända miljöer — kompletterat med tekniska spärrar (t.ex. DLP) där möjligt.</span></div></td><td class="check"></td></tr>
         </tbody>
       </table>
     </div>
@@ -368,15 +411,15 @@
     <h2>4. Separation mellan produktion, test och utveckling</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-33</td><td>Produktion SKA vara tekniskt separerad från utvecklings-, test- och utbildningsmiljö.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-34</td><td>Produktionskonton, produktionscertifikat, produktionsnycklar och produktions-secrets FÅR INTE användas i utvecklings- eller testmiljö.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-35</td><td>Produktionsdata klassad K3 FÅR INTE användas i utvecklings-, demo- eller utbildningsmiljö som normal metod.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-36</td><td>Testdata SKA vara syntetisk, anonymiserad eller på annat sätt framställd så att den inte längre innehåller K3-information när detta är möjligt.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-37</td><td>Om verklig K3-data undantagsvis måste användas i test SKA miljön behandlas som K3-produktionsmiljö beträffande åtkomst, loggning och skydd.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-38</td><td>Sådan användning SKA tidsbegränsas och godkännas av informationsägare och informationssäkerhetsfunktion.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-39</td><td>K3-information SKA raderas från tillfälliga testmiljöer omedelbart efter avslutat ändamål, med beaktande av tillämpliga arkiv- och informationshanteringskrav.</td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-33</td><td>Produktion SKA vara tekniskt separerad från utvecklings-, test- och utbildningsmiljö.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Separata miljöer för produktion, test och utveckling med teknisk isolering mellan dem.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-34</td><td>Produktionskonton, produktionscertifikat, produktionsnycklar och produktions-secrets FÅR INTE användas i utvecklings- eller testmiljö.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Separata konton, certifikat, nycklar och secrets per miljö — hanterat i konfiguration och pipelines.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-35</td><td>Produktionsdata klassad K3 FÅR INTE användas i utvecklings-, demo- eller utbildningsmiljö som normal metod.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team</span><span class="how">Test, demo och utbildning sker utan produktionsdata som normalläge.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-36</td><td>Testdata SKA vara syntetisk, anonymiserad eller på annat sätt framställd så att den inte längre innehåller K3-information när detta är möjligt.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Syntetisk eller anonymiserad testdata måste tas fram och underhållas som del av utvecklingsarbetet.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-37</td><td>Om verklig K3-data undantagsvis måste användas i test SKA miljön behandlas som K3-produktionsmiljö beträffande åtkomst, loggning och skydd.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Testmiljön måste i undantagsfallet härdas till produktionsnivå — åtkomst, loggning och skydd.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-38</td><td>Sådan användning SKA tidsbegränsas och godkännas av informationsägare och informationssäkerhetsfunktion.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Godkännande av informationsägare och säkerhetsfunktion krävs, med tidsgräns.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-39</td><td>K3-information SKA raderas från tillfälliga testmiljöer omedelbart efter avslutat ändamål, med beaktande av tillämpliga arkiv- och informationshanteringskrav.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team</span><span class="how">Raderingsrutin direkt efter avslutat ändamål, med hänsyn till arkivkrav.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -390,19 +433,19 @@
     <h2>5. Kryptering</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-40</td><td>K3-information SKA krypteras vid överföring över nätverk.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-41</td><td>K3-information SKA som intern kommunal baslinje krypteras vid lagring, inklusive databaser, objektlagring, filsystem och säkerhetskopior.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-42</td><td>TLS 1.2 eller senare SKA användas. TLS 1.3 BÖR användas där det stöds.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-43</td><td>Äldre eller osäkra protokoll och kryptografiska algoritmer FÅR INTE användas.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-44</td><td>Kommunen SKA upprätthålla en separat aktuell kryptografisk profil som anger godkända algoritmer, protokoll och nyckellängder.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-45</td><td>Krypteringsnycklar SKA lagras och hanteras separat från den information de skyddar.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-46</td><td>Nycklar och secrets SKA hanteras via godkänd KMS, HSM, secrets manager eller motsvarande central funktion.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-47</td><td>Krypteringsnycklar FÅR INTE lagras i källkod, container-images, konfigurationsfiler i klartext eller ärendehanteringssystem.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-48</td><td>Åtkomst till kryptografiska nycklar SKA vara separat behörighetsstyrd och loggad.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-49</td><td>Nycklar SKA kunna roteras och återkallas.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-50</td><td>Säkerhetsloggar och autentiseringsuppgifter SKA skyddas med kryptering vid överföring.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-40</td><td>K3-information SKA krypteras vid överföring över nätverk.</td><td class="impact"><div class="imp"><span class="tag t-app">Applikation</span><span class="how">All kommunikation måste gå över TLS — även intern service-till-service-trafik.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-41</td><td>K3-information SKA som intern kommunal baslinje krypteras vid lagring, inklusive databaser, objektlagring, filsystem och säkerhetskopior.</td><td class="impact"><div class="imp"><span class="tag t-app">Applikation</span><span class="how">Databas, objektlagring, filsystem och backuper måste krypteras vid lagring (at rest).</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-42</td><td>TLS 1.2 eller senare SKA användas. TLS 1.3 BÖR användas där det stöds.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">TLS-konfigurationen måste låsas till 1.2 eller senare, helst 1.3.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-43</td><td>Äldre eller osäkra protokoll och kryptografiska algoritmer FÅR INTE användas.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Äldre protokoll och svaga chiffer måste inaktiveras i all serverkonfiguration.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-44</td><td>Kommunen SKA upprätthålla en separat aktuell kryptografisk profil som anger godkända algoritmer, protokoll och nyckellängder.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Kommunen måste ta fram och förvalta en kryptografisk profil som teamet sedan följer.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-45</td><td>Krypteringsnycklar SKA lagras och hanteras separat från den information de skyddar.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Nyckelhantering i separat tjänst — inte i samma system eller databas som datat.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-46</td><td>Nycklar och secrets SKA hanteras via godkänd KMS, HSM, secrets manager eller motsvarande central funktion.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Applikationen måste hämta nycklar och secrets från central KMS/secrets manager i stället för egen hantering.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-47</td><td>Krypteringsnycklar FÅR INTE lagras i källkod, container-images, konfigurationsfiler i klartext eller ärendehanteringssystem.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Secrets får aldrig checkas in — kräver secret scanning och säker konfigurationshantering.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-48</td><td>Åtkomst till kryptografiska nycklar SKA vara separat behörighetsstyrd och loggad.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Nyckelvalvet måste ha egen behörighetsstyrning och åtkomstloggning.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-49</td><td>Nycklar SKA kunna roteras och återkallas.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Lösningen måste klara nyckelrotation utan driftstopp.</span></div><div class="imp"><span class="tag t-rut">Rutin · team</span><span class="how">Rotationsrutin med intervall och ansvar måste finnas.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-50</td><td>Säkerhetsloggar och autentiseringsuppgifter SKA skyddas med kryptering vid överföring.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Loggtransport (t.ex. till SIEM) och credential-flöden måste ske över krypterade kanaler.</span></div></td><td class="check"></td></tr>
         </tbody>
       </table>
     </div>
@@ -416,18 +459,18 @@
     <h2>6. Applikationer, API:er och databaser</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-51</td><td>Autentisering och behörighetskontroll SKA genomföras server-side. Klientens uppgift om behörighet får aldrig ensam betraktas som betrodd.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-52</td><td>API:er SKA kontrollera behörighet för varje relevant operation och resurs.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-53</td><td>K3-information FÅR INTE exponeras genom publikt åtkomliga API:er utan autentisering.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-54</td><td>K3-information BÖR INTE placeras i URL:er eller query-parametrar eftersom dessa lätt hamnar i loggar, historik och mellanliggande system.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-55</td><td>Service-till-service-kommunikation med K3-information SKA använda stark autentisering, exempelvis OAuth2/OIDC-baserade maskinidentiteter, mTLS eller motsvarande.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-56</td><td>Kortlivade tokens och credentials BÖR användas framför långlivade statiska nycklar.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-57</td><td>Databasanvändare för applikationer SKA vara separerade från administrativa databaskonton.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-58</td><td>Databaser SKA vara åtkomliga endast från godkända system och administrativa anslutningsvägar.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-59</td><td>Felmeddelanden från externa gränssnitt FÅR INTE exponera K3-information, secrets, stack traces eller intern systeminformation.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-60</td><td>Endast de K3-data som krävs för aktuell funktion SKA hämtas och exponeras.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-51</td><td>Autentisering och behörighetskontroll SKA genomföras server-side. Klientens uppgift om behörighet får aldrig ensam betraktas som betrodd.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">All autentisering och behörighetskontroll måste implementeras i backend — aldrig enbart i klienten.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-52</td><td>API:er SKA kontrollera behörighet för varje relevant operation och resurs.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Behörighetskontroll på objekt- och operationsnivå (skydd mot BOLA/IDOR) måste byggas in i varje endpoint.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-53</td><td>K3-information FÅR INTE exponeras genom publikt åtkomliga API:er utan autentisering.</td><td class="impact"><div class="imp"><span class="tag t-app">Applikation</span><span class="how">API:erna måste kräva autentisering och döljas/låsas i DevPortal så att inte vem som helst kan göra anrop mot produktion.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-54</td><td>K3-information BÖR INTE placeras i URL:er eller query-parametrar eftersom dessa lätt hamnar i loggar, historik och mellanliggande system.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">API-design utan känsliga uppgifter i URL:er eller query-parametrar — använd request body eller id:n.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-55</td><td>Service-till-service-kommunikation med K3-information SKA använda stark autentisering, exempelvis OAuth2/OIDC-baserade maskinidentiteter, mTLS eller motsvarande.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">OAuth2/OIDC-maskinidentiteter eller mTLS måste implementeras mellan tjänster.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-56</td><td>Kortlivade tokens och credentials BÖR användas framför långlivade statiska nycklar.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Tokenhantering med korta livslängder i stället för statiska API-nycklar.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-57</td><td>Databasanvändare för applikationer SKA vara separerade från administrativa databaskonton.</td><td class="impact"><div class="imp"><span class="tag t-app">Applikation</span><span class="how">Applikationens databaskonto separeras från admin-konton och ges endast de rättigheter applikationen behöver.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-58</td><td>Databaser SKA vara åtkomliga endast från godkända system och administrativa anslutningsvägar.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Databasens nätverksåtkomst begränsas till godkända system och kontrollerade admin-vägar.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-59</td><td>Felmeddelanden från externa gränssnitt FÅR INTE exponera K3-information, secrets, stack traces eller intern systeminformation.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Felhanteringen måste byggas så att stack traces och intern information aldrig når externa gränssnitt.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-60</td><td>Endast de K3-data som krävs för aktuell funktion SKA hämtas och exponeras.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">API:er och vyer hämtar endast de fält som behövs — dataminimering i frågor och svar.</span></div></td><td class="check"></td></tr>
         </tbody>
       </table>
     </div>
@@ -440,19 +483,19 @@
     <h2>7. Säker utvecklingsprocess och CI/CD</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-61</td><td>System som behandlar K3-information SKA utvecklas enligt etablerad metod för säker utveckling.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-62</td><td>Kodändringar till produktionssystem SKA versionshanteras och vara spårbara till person och ändringsärende.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-63</td><td>Kod till säkerhetskritiska delar SKA granskas av annan person innan produktionssättning.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-64</td><td>Produktionsbranch SKA vara skyddad mot obehöriga direktändringar.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-65</td><td>Secrets FÅR INTE lagras i Git-repository, pipelineskript eller motsvarande.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-66</td><td>CI/CD-system SKA använda separata maskinidentiteter för produktion och andra miljöer.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-67</td><td>En utvecklare BÖR INTE genom sin vanliga utvecklaridentitet både kunna ändra programkod och självständigt kringgå produktionssättningens säkerhetskontroller.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-68</td><td>SAST, dependency scanning och secret scanning SKA genomföras automatiskt i byggprocessen.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-69</td><td>Säkerhetstester SKA genomföras före första produktionssättning och efter säkerhetsmässigt betydande förändringar.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-70</td><td>Kända kritiska sårbarheter SKA åtgärdas eller riskaccepteras uttryckligen innan produktionssättning.</td><td class="check"><span class="ok">✓</span></td></tr>
-          <tr><td class="id">K3-71</td><td>Komponenter och beroenden SKA inventeras så att berörda system snabbt kan identifieras vid nyupptäckta sårbarheter. SBOM BÖR användas där det är praktiskt möjligt.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-61</td><td>System som behandlar K3-information SKA utvecklas enligt etablerad metod för säker utveckling.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · team</span><span class="how">Teamet måste anta och dokumenterat följa en metod för säker utveckling.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-62</td><td>Kodändringar till produktionssystem SKA versionshanteras och vara spårbara till person och ändringsärende.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team</span><span class="how">Alla ändringar via versionshantering, kopplade till person och ändringsärende.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-63</td><td>Kod till säkerhetskritiska delar SKA granskas av annan person innan produktionssättning.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team</span><span class="how">Obligatorisk kodgranskning av annan person före produktionssättning.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-64</td><td>Produktionsbranch SKA vara skyddad mot obehöriga direktändringar.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Branch protection måste konfigureras i repot — inga direktpushar till produktionsbranchen.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-65</td><td>Secrets FÅR INTE lagras i Git-repository, pipelineskript eller motsvarande.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Secrets hanteras utanför repo och pipelineskript, med secret scanning som skyddsnät.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-66</td><td>CI/CD-system SKA använda separata maskinidentiteter för produktion och andra miljöer.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Pipelines måste konfigureras med separata maskinidentiteter per miljö.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-67</td><td>En utvecklare BÖR INTE genom sin vanliga utvecklaridentitet både kunna ändra programkod och självständigt kringgå produktionssättningens säkerhetskontroller.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Rollseparation i CI/CD så att samma identitet inte både kan ändra kod och kringgå deployens kontroller.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-68</td><td>SAST, dependency scanning och secret scanning SKA genomföras automatiskt i byggprocessen.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Automatiska säkerhetsskanningar (SAST, dependency- och secret scanning) måste ingå i byggpipelinen.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-69</td><td>Säkerhetstester SKA genomföras före första produktionssättning och efter säkerhetsmässigt betydande förändringar.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team+org</span><span class="how">Säkerhetstest/penetrationstest måste planeras och beställas före första release och efter större förändringar.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-70</td><td>Kända kritiska sårbarheter SKA åtgärdas eller riskaccepteras uttryckligen innan produktionssättning.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team</span><span class="how">Release-grind: kritiska fynd åtgärdas eller riskaccepteras dokumenterat före produktionssättning.</span></div></td><td class="check"><span class="ok">✓</span></td></tr>
+          <tr><td class="id">K3-71</td><td>Komponenter och beroenden SKA inventeras så att berörda system snabbt kan identifieras vid nyupptäckta sårbarheter. SBOM BÖR användas där det är praktiskt möjligt.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Beroendeinventering/SBOM måste genereras i bygget och hållas aktuell.</span></div></td><td class="check"></td></tr>
         </tbody>
       </table>
     </div>
@@ -466,18 +509,18 @@
     <h2>8. Loggning och spårbarhet</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-72</td><td>Åtkomst till K3-information SKA säkerhetsloggas.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-73</td><td>Loggen SKA, där det är relevant, kunna visa vem som fick åtkomst, vilken information eller resurs som berördes, vilken åtgärd som utfördes och när den utfördes.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-74</td><td>Användning av administrativa rättigheter SKA loggas.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-75</td><td>Behörighetsförändringar SKA loggas.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-76</td><td>Misslyckade och misstänkt obehöriga åtkomstförsök SKA loggas.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-77</td><td>Säkerhetsloggar SKA skickas till ett centralt, åtkomstskyddat logg-/SIEM-system när detta är tekniskt möjligt.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-78</td><td>Den som administrerar ett K3-system BÖR INTE ensam kunna förändra eller radera säkerhetsloggen över sina egna aktiviteter.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-79</td><td>Loggar SKA analyseras med ett intervall baserat på risk. Relevant misstänkt aktivitet ska generera larm.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-80</td><td>Säkerhetsloggar SKA ha en dokumenterad lagringstid som är tillräcklig för incidentutredning och rättsliga krav.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-81</td><td>Applikationsloggar FÅR INTE innehålla lösenord, autentiseringstokens, kryptografiska nycklar eller mer K3-information än vad som är nödvändigt.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-72</td><td>Åtkomst till K3-information SKA säkerhetsloggas.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Åtkomstloggning måste byggas in i applikationen — även läsningar av K3-data.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-73</td><td>Loggen SKA, där det är relevant, kunna visa vem som fick åtkomst, vilken information eller resurs som berördes, vilken åtgärd som utfördes och när den utfördes.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Loggformatet måste innehålla identitet, resurs, åtgärd och tidpunkt.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-74</td><td>Användning av administrativa rättigheter SKA loggas.</td><td class="impact"><div class="imp"><span class="tag t-app">Applikation</span><span class="how">Administrativa åtgärder måste loggas i både applikation och underliggande plattform.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-75</td><td>Behörighetsförändringar SKA loggas.</td><td class="impact"><div class="imp"><span class="tag t-app">Applikation</span><span class="how">Alla tilldelningar och borttag av behörigheter måste loggas.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-76</td><td>Misslyckade och misstänkt obehöriga åtkomstförsök SKA loggas.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Misslyckade inloggningar och nekade åtkomstförsök måste loggas och kunna larmas på.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-77</td><td>Säkerhetsloggar SKA skickas till ett centralt, åtkomstskyddat logg-/SIEM-system när detta är tekniskt möjligt.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Loggarna måste skeppas till kommunens centrala SIEM-/loggsystem.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-78</td><td>Den som administrerar ett K3-system BÖR INTE ensam kunna förändra eller radera säkerhetsloggen över sina egna aktiviteter.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Loggar skrivs till ett system där systemets egna administratörer saknar ändringsrätt (append-only/central logg).</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-79</td><td>Loggar SKA analyseras med ett intervall baserat på risk. Relevant misstänkt aktivitet ska generera larm.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · org</span><span class="how">Regelbunden logganalys och larmregler måste etableras hos SOC/driftfunktion.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-80</td><td>Säkerhetsloggar SKA ha en dokumenterad lagringstid som är tillräcklig för incidentutredning och rättsliga krav.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Retentiontid för säkerhetsloggar måste beslutas och dokumenteras, avvägd mot GDPR.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-81</td><td>Applikationsloggar FÅR INTE innehålla lösenord, autentiseringstokens, kryptografiska nycklar eller mer K3-information än vad som är nödvändigt.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Loggmaskning måste implementeras — inga lösenord, tokens eller onödig K3-data i apploggarna.</span></div></td><td class="check"></td></tr>
         </tbody>
       </table>
     </div>
@@ -491,14 +534,14 @@
     <h2>9. Backup, kontinuitet och återställning</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-82</td><td>Säkerhetskopior innehållande K3-information SKA ha minst samma konfidentialitetsskydd som originalinformationen.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-83</td><td>K3-backup SKA krypteras.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-84</td><td>Minst en återställningsbar kopia SKA vara logiskt eller fysiskt separerad så att kompromettering av produktionsmiljön inte automatiskt komprometterar samtliga kopior.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-85</td><td>Återställning SKA testas regelbundet.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-86</td><td>RTO (Recovery Time Objective — hur snabbt systemet ska vara återställt) och RPO (Recovery Point Objective — hur mycket data som får gå förlorad) SKA fastställas utifrån informations- och verksamhetsklassning.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-87</td><td>Åtkomst till backup SKA vara särskilt behörighetsstyrd och loggad.</td><td class="check"></td></tr>
+          <tr><td class="id">K3-82</td><td>Säkerhetskopior innehållande K3-information SKA ha minst samma konfidentialitetsskydd som originalinformationen.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Backupmiljön måste ha samma åtkomstskydd och kryptering som produktionsmiljön.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-83</td><td>K3-backup SKA krypteras.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Backuplösningen måste konfigureras med kryptering av alla kopior.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-84</td><td>Minst en återställningsbar kopia SKA vara logiskt eller fysiskt separerad så att kompromettering av produktionsmiljön inte automatiskt komprometterar samtliga kopior.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Minst en kopia offline eller i separat miljö — skydd mot ransomware som når produktionen.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-85</td><td>Återställning SKA testas regelbundet.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team+org</span><span class="how">Regelbundna, dokumenterade återställningstester tillsammans med driftfunktionen.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-86</td><td>RTO (Recovery Time Objective — hur snabbt systemet ska vara återställt) och RPO (Recovery Point Objective — hur mycket data som får gå förlorad) SKA fastställas utifrån informations- och verksamhetsklassning.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">RTO och RPO måste beslutas tillsammans med verksamheten utifrån klassningen.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-87</td><td>Åtkomst till backup SKA vara särskilt behörighetsstyrd och loggad.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Backupsystemet måste ha egen behörighetsstyrning och åtkomstloggning.</span></div></td><td class="check"></td></tr>
         </tbody>
       </table>
     </div>
@@ -512,21 +555,21 @@
     <h2>10. Leverantörer, SaaS och molntjänster</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-88</td><td>Informationsklassning och riskanalys SKA genomföras innan K3-information läggs hos extern leverantör.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-89</td><td>Leverantören SKA kontraktuellt omfattas av minst de säkerhetskrav som är relevanta för den del leverantören utför.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-90</td><td>Kommunen SKA känna till vilka underleverantörer som kan behandla eller få åtkomst till K3-information.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-91</td><td>Geografisk plats och jurisdiktion för behandling, lagring, backup och supportåtkomst SKA vara kända och riskbedömda.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-92</td><td>Leverantörens personal SKA INTE ha generell permanent åtkomst till K3-information.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-93</td><td>Supportåtkomst SKA vara personlig, MFA-skyddad, tidsbegränsad och loggad.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-94</td><td>Avtalet SKA innehålla krav på incidentrapportering till kommunen.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-95</td><td>Avtalet SKA ge kommunen möjlighet att följa upp leverantörens efterlevnad av säkerhetskraven.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-96</td><td>Avtalet SKA reglera återlämning, migrering och säker radering av kommunens information när avtalet upphör.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-97</td><td>Leverantörsberoenden och exitmöjlighet SKA analyseras innan tjänsten tas i bruk.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-98</td><td>Kommunen SKA kunna avveckla leverantörens konton och åtkomst utan leverantörens medverkan eller inom en dokumenterat accepterad tidsperiod.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-99</td><td>Personuppgiftsbiträdesavtal SKA finnas när leverantören behandlar personuppgifter som personuppgiftsbiträde.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-100</td><td>För sekretessbelagda uppgifter SKA en separat OSL-bedömning göras innan extern åtkomst eller behandling tillåts.</td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-88</td><td>Informationsklassning och riskanalys SKA genomföras innan K3-information läggs hos extern leverantör.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Klassning och riskanalys som obligatorisk grind före upphandling eller avrop.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-89</td><td>Leverantören SKA kontraktuellt omfattas av minst de säkerhetskrav som är relevanta för den del leverantören utför.</td><td class="impact"><div class="imp"><span class="tag t-avt">Avtal</span><span class="how">Relevanta säkerhetskrav måste skrivas in i leverantörsavtalet.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-90</td><td>Kommunen SKA känna till vilka underleverantörer som kan behandla eller få åtkomst till K3-information.</td><td class="impact"><div class="imp"><span class="tag t-avt">Avtal</span><span class="how">Avtalet måste kräva redovisning och godkännande av underleverantörer.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-91</td><td>Geografisk plats och jurisdiktion för behandling, lagring, backup och supportåtkomst SKA vara kända och riskbedömda.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Dataplacering och jurisdiktion måste kartläggas och riskbedömas före avtal.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-92</td><td>Leverantörens personal SKA INTE ha generell permanent åtkomst till K3-information.</td><td class="impact"><div class="imp"><span class="tag t-avt">Avtal</span><span class="how">Avtal och teknisk konfiguration måste stänga stående leverantörsåtkomst som normalläge.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-93</td><td>Supportåtkomst SKA vara personlig, MFA-skyddad, tidsbegränsad och loggad.</td><td class="impact"><div class="imp"><span class="tag t-avt">Avtal</span><span class="how">Villkoren för supportåtkomst regleras i avtal.</span></div><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Personliga MFA-konton med tidsgräns och loggning måste konfigureras.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-94</td><td>Avtalet SKA innehålla krav på incidentrapportering till kommunen.</td><td class="impact"><div class="imp"><span class="tag t-avt">Avtal</span><span class="how">Incidentrapporteringsskyldighet med tidsfrister måste skrivas in i avtalet.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-95</td><td>Avtalet SKA ge kommunen möjlighet att följa upp leverantörens efterlevnad av säkerhetskraven.</td><td class="impact"><div class="imp"><span class="tag t-avt">Avtal</span><span class="how">Uppföljnings-/revisionsrätt i avtalet.</span></div><div class="imp"><span class="tag t-rut">Rutin · org</span><span class="how">Uppföljningen måste också genomföras återkommande.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-96</td><td>Avtalet SKA reglera återlämning, migrering och säker radering av kommunens information när avtalet upphör.</td><td class="impact"><div class="imp"><span class="tag t-avt">Avtal</span><span class="how">Exitvillkor om återlämning, migrering och säker radering måste regleras i avtalet.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-97</td><td>Leverantörsberoenden och exitmöjlighet SKA analyseras innan tjänsten tas i bruk.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Beroende- och exitanalys måste genomföras innan tjänsten tas i bruk.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-98</td><td>Kommunen SKA kunna avveckla leverantörens konton och åtkomst utan leverantörens medverkan eller inom en dokumenterat accepterad tidsperiod.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Kommunen måste tekniskt kunna stänga leverantörens konton och åtkomst på egen hand.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-99</td><td>Personuppgiftsbiträdesavtal SKA finnas när leverantören behandlar personuppgifter som personuppgiftsbiträde.</td><td class="impact"><div class="imp"><span class="tag t-avt">Avtal</span><span class="how">PuB-avtal måste tecknas innan leverantören behandlar personuppgifter.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-100</td><td>För sekretessbelagda uppgifter SKA en separat OSL-bedömning göras innan extern åtkomst eller behandling tillåts.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Separat OSL-bedömning (10 kap. 2 a §) måste göras innan extern behandling tillåts.</span></div></td><td class="check">N/A</td></tr>
         </tbody>
       </table>
     </div>
@@ -541,15 +584,15 @@
     <h2>11. K3 och AI-tjänster</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-101</td><td>K3-information FÅR INTE skickas till en extern generativ AI-tjänst som inte uttryckligen godkänts för K3.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-102</td><td>Ett vanligt konsumentkonto hos en AI-tjänst FÅR INTE användas för behandling av K3-information.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-103</td><td>Innan K3-information behandlas av en AI-tjänst SKA leverantör, datalagring, supportåtkomst, underleverantörer, dataplacering och avtalsvillkor riskbedömas.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-104</td><td>Kommunens K3-information FÅR INTE användas för leverantörens generella modellträning eller andra egna ändamål.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-105</td><td>Prompter, bifogade dokument, embeddings, vektordatabaser, konversationshistorik och genererade svar SKA betraktas som K3 om de innehåller eller kan återskapa K3-information.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-106</td><td>Samma krav på kryptering, åtkomstkontroll, loggning, retention och radering SKA tillämpas på AI-relaterad databehandling som på annan K3-behandling.</td><td class="check">N/A</td></tr>
-          <tr><td class="id">K3-107</td><td>RAG-/vektordatabaser SKA implementera behörighetskontroll som förhindrar att användaren genom AI-gränssnittet får information som denne inte hade rätt att läsa i källsystemet.</td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-101</td><td>K3-information FÅR INTE skickas till en extern generativ AI-tjänst som inte uttryckligen godkänts för K3.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Godkännandeprocess för AI-tjänster krävs — endast K3-godkända tjänster får användas.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-102</td><td>Ett vanligt konsumentkonto hos en AI-tjänst FÅR INTE användas för behandling av K3-information.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team+org</span><span class="how">Endast konton under kommunens enterprise-avtal får användas — aldrig privata eller konsumentkonton.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-103</td><td>Innan K3-information behandlas av en AI-tjänst SKA leverantör, datalagring, supportåtkomst, underleverantörer, dataplacering och avtalsvillkor riskbedömas.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Riskbedömning av leverantör, lagring, support, underleverantörer och avtal krävs före användning.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-104</td><td>Kommunens K3-information FÅR INTE användas för leverantörens generella modellträning eller andra egna ändamål.</td><td class="impact"><div class="imp"><span class="tag t-avt">Avtal</span><span class="how">Avtalet måste uttryckligen utesluta modellträning och egna ändamål med kommunens data.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-105</td><td>Prompter, bifogade dokument, embeddings, vektordatabaser, konversationshistorik och genererade svar SKA betraktas som K3 om de innehåller eller kan återskapa K3-information.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">All AI-relaterad data — prompter, embeddings, historik, svar — måste designas in i lösningens K3-skydd.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-106</td><td>Samma krav på kryptering, åtkomstkontroll, loggning, retention och radering SKA tillämpas på AI-relaterad databehandling som på annan K3-behandling.</td><td class="impact"><div class="imp"><span class="tag t-app">Applikation</span><span class="how">Kryptering, åtkomstkontroll, loggning och radering måste tillämpas även på AI-flöden.</span></div></td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-107</td><td>RAG-/vektordatabaser SKA implementera behörighetskontroll som förhindrar att användaren genom AI-gränssnittet får information som denne inte hade rätt att läsa i källsystemet.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Behörighetsfiltrering måste byggas in i RAG-sökningen så att svar aldrig innehåller data användaren saknar rätt till.</span></div></td><td class="check">N/A</td></tr>
         </tbody>
       </table>
     </div>
@@ -563,14 +606,14 @@
     <h2>12. Incidenter och sårbarheter</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">K3-108</td><td>Misstänkt obehörig åtkomst till K3-information SKA behandlas som en informationssäkerhetsincident.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-109</td><td>Incidentfunktionen SKA omedelbart kunna spärra användare, tokens, certifikat och administrativa sessioner.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-110</td><td>Relevant bevismaterial och säkerhetsloggar SKA säkras innan system återställs om detta kan göras utan att förvärra incidenten.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-111</td><td>Incidenten SKA bedömas mot rapporteringskraven i cybersäkerhetslagen, GDPR och eventuell sektorslagstiftning.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-112</td><td>Kritiska säkerhetsuppdateringar SKA hanteras skyndsamt genom en dokumenterad sårbarhetsprocess.</td><td class="check"></td></tr>
-          <tr><td class="id">K3-113</td><td>System vars mjukvara inte längre får säkerhetsuppdateringar SKA avvecklas, uppgraderas eller omfattas av dokumenterade kompenserande åtgärder och accepterad risk.</td><td class="check">N/A</td></tr>
+          <tr><td class="id">K3-108</td><td>Misstänkt obehörig åtkomst till K3-information SKA behandlas som en informationssäkerhetsincident.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team+org</span><span class="how">Misstänkt obehörig åtkomst måste klassas som incident och eskaleras enligt incidentprocessen.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-109</td><td>Incidentfunktionen SKA omedelbart kunna spärra användare, tokens, certifikat och administrativa sessioner.</td><td class="impact"><div class="imp"><span class="tag t-app">Applikation</span><span class="how">Funktioner för att omedelbart spärra användare, tokens, certifikat och sessioner måste finnas.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-110</td><td>Relevant bevismaterial och säkerhetsloggar SKA säkras innan system återställs om detta kan göras utan att förvärra incidenten.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · org</span><span class="how">Forensisk rutin: loggar och bevis säkras före återställning.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-111</td><td>Incidenten SKA bedömas mot rapporteringskraven i cybersäkerhetslagen, GDPR och eventuell sektorslagstiftning.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Incidentprocessen måste innehålla bedömning mot 24-/72-timmarsfristerna i NIS2 och GDPR.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-112</td><td>Kritiska säkerhetsuppdateringar SKA hanteras skyndsamt genom en dokumenterad sårbarhetsprocess.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team+org</span><span class="how">Dokumenterad sårbarhets- och patchprocess med skyndsam hantering av kritiska uppdateringar.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">K3-113</td><td>System vars mjukvara inte längre får säkerhetsuppdateringar SKA avvecklas, uppgraderas eller omfattas av dokumenterade kompenserande åtgärder och accepterad risk.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Livscykelbevakning av mjukvara — avveckla, uppgradera eller dokumentera kompenserande åtgärder och riskaccept.</span></div></td><td class="check">N/A</td></tr>
         </tbody>
       </table>
     </div>
@@ -589,17 +632,17 @@
     </p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">R3-01</td><td>Alla ändringar av ärendedata SKA loggas med vem som ändrade, vad som ändrades och när.</td><td class="check"></td></tr>
-          <tr><td class="id">R3-02</td><td>Ändringshistoriken SKA vara skyddad mot redigering och radering, även för administratörer.</td><td class="check"></td></tr>
-          <tr><td class="id">R3-03</td><td>Fastställt innehåll — beslut, utredningar och avslutade faser — SKA låsas eller versioneras så att ändringar i efterhand alltid är spårbara.</td><td class="check"></td></tr>
-          <tr><td class="id">R3-04</td><td>Validering och rimlighetskontroller av indata SKA genomföras server-side. Klientens validering får aldrig ensam betraktas som betrodd.</td><td class="check"></td></tr>
-          <tr><td class="id">R3-05</td><td>Säkerhetskopior och bilagor SKA skyddas mot manipulation, till exempel genom checksummor eller motsvarande integritetskontroller.</td><td class="check"></td></tr>
-          <tr><td class="id">R3-06</td><td>Informationens integritet SKA verifieras vid återställning från säkerhetskopia.</td><td class="check"></td></tr>
-          <tr><td class="id">R3-07</td><td>Organisations- och behörighetsdata som hämtas från externa källor SKA valideras vid inläsning. Fel SKA upptäckas och rapporteras.</td><td class="check"></td></tr>
-          <tr><td class="id">R3-08</td><td>Dataöverföringar mellan system SKA skyddas mot förvanskning genom integritetsskyddade protokoll.</td><td class="check"></td></tr>
-          <tr><td class="id">R3-09</td><td>Aggregeringar och statistik som lämnas till verksamheten SKA kunna härledas till underliggande grunddata.</td><td class="check"></td></tr>
+          <tr><td class="id">R3-01</td><td>Alla ändringar av ärendedata SKA loggas med vem som ändrade, vad som ändrades och när.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">En audit trail för alla ärendeändringar (vem, vad, när) måste byggas in i datamodellen.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">R3-02</td><td>Ändringshistoriken SKA vara skyddad mot redigering och radering, även för administratörer.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Historiken måste lagras append-only och vara oåtkomlig för ändring — även för administratörer.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">R3-03</td><td>Fastställt innehåll — beslut, utredningar och avslutade faser — SKA låsas eller versioneras så att ändringar i efterhand alltid är spårbara.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Låsnings-/versioneringsfunktion för fastställt innehåll måste byggas in.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">R3-04</td><td>Validering och rimlighetskontroller av indata SKA genomföras server-side. Klientens validering får aldrig ensam betraktas som betrodd.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">All validering och rimlighetskontroll måste implementeras i backend, inte bara i klienten.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">R3-05</td><td>Säkerhetskopior och bilagor SKA skyddas mot manipulation, till exempel genom checksummor eller motsvarande integritetskontroller.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Integritetskontroller (checksummor eller motsvarande) för backup och bilagor måste implementeras.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">R3-06</td><td>Informationens integritet SKA verifieras vid återställning från säkerhetskopia.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team+org</span><span class="how">Återställningsrutinen måste inkludera integritetsverifiering av återläst data.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">R3-07</td><td>Organisations- och behörighetsdata som hämtas från externa källor SKA valideras vid inläsning. Fel SKA upptäckas och rapporteras.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Integrationer måste validera inläst data och larma vid fel.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">R3-08</td><td>Dataöverföringar mellan system SKA skyddas mot förvanskning genom integritetsskyddade protokoll.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Integritetsskyddade protokoll (TLS/signering) för alla överföringar mellan system.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">R3-09</td><td>Aggregeringar och statistik som lämnas till verksamheten SKA kunna härledas till underliggande grunddata.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Statistikfunktioner måste byggas så att siffror kan spåras tillbaka till grunddata.</span></div></td><td class="check"></td></tr>
         </tbody>
       </table>
     </div>
@@ -618,13 +661,13 @@
     </p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
         <tbody>
-          <tr><td class="id">T2-01</td><td>RTO (Recovery Time Objective — hur snabbt systemet ska vara återställt) och RPO (Recovery Point Objective — hur mycket data som får gå förlorad) SKA fastställas utifrån T2. Som riktvärde BÖR återställning kunna ske inom en arbetsdag och dataförlust begränsas till senaste dygnets säkerhetskopia.</td><td class="check"></td></tr>
-          <tr><td class="id">T2-02</td><td>Grundläggande driftövervakning med larm vid driftstörning SKA finnas.</td><td class="check"></td></tr>
-          <tr><td class="id">T2-03</td><td>En dokumenterad återstartsrutin SKA finnas och vara testad.</td><td class="check"></td></tr>
-          <tr><td class="id">T2-04</td><td>Planerade underhållsfönster SKA kommuniceras till verksamheten i förväg.</td><td class="check"></td></tr>
-          <tr><td class="id">T2-05</td><td>Driftstörningar som påverkar verksamheten SKA kommuniceras till berörda.</td><td class="check"></td></tr>
+          <tr><td class="id">T2-01</td><td>RTO (Recovery Time Objective — hur snabbt systemet ska vara återställt) och RPO (Recovery Point Objective — hur mycket data som får gå förlorad) SKA fastställas utifrån T2. Som riktvärde BÖR återställning kunna ske inom en arbetsdag och dataförlust begränsas till senaste dygnets säkerhetskopia.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Riktvärdena — återställning inom en arbetsdag, högst ett dygns dataförlust — fastställs tillsammans med verksamheten.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">T2-02</td><td>Grundläggande driftövervakning med larm vid driftstörning SKA finnas.</td><td class="impact"><div class="imp"><span class="tag t-inf">Infrastruktur</span><span class="how">Övervakning med larm vid driftstörning måste sättas upp.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">T2-03</td><td>En dokumenterad återstartsrutin SKA finnas och vara testad.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · team+org</span><span class="how">Dokumenterad återstartsrutin som testas tillsammans med driftfunktionen.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">T2-04</td><td>Planerade underhållsfönster SKA kommuniceras till verksamheten i förväg.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · org</span><span class="how">Kommunikationsrutin till verksamheten inför planerat underhåll.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">T2-05</td><td>Driftstörningar som påverkar verksamheten SKA kommuniceras till berörda.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · org</span><span class="how">Rutin för störningsinformation till berörda i verksamheten.</span></div></td><td class="check"></td></tr>
         </tbody>
       </table>
     </div>

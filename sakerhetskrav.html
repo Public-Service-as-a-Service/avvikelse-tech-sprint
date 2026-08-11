@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Säkerhetskrav K3 · Avvikelsehantering · Sundsvalls kommun</title>
-<meta name="description" content="Säkerhetskrav för hantering av information med konfidentialitet 3 (K3) — kravkatalog för avvikelsehanteringen inom välfärdssektorn i Sundsvalls kommun.">
+<title>Säkerhetskrav K3 R3 T2 · Avvikelsehantering · Sundsvalls kommun</title>
+<meta name="description" content="Säkerhetskrav för informationsklassningen K3 R3 T2 — kravkatalog för avvikelsehanteringen inom välfärdssektorn i Sundsvalls kommun.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
   :root {
@@ -208,10 +208,12 @@
 <header id="top">
   <div class="wrap">
     <div class="badge"><span class="dot"></span> Sundsvalls kommun · Kravkatalog</div>
-    <h1>Säkerhetskrav <span class="gradient">K3</span></h1>
+    <h1>Säkerhetskrav <span class="gradient">K3 · R3 · T2</span></h1>
     <p class="hero-sub">
-      Hantering av information med konfidentialitet 3 (K3) — alltså information där ett röjande
-      skulle ge allvarliga konsekvenser.
+      Avvikelsehanteringens samlade informationsklassning är K3 R3 T2 — konfidentialitet 3
+      (ett röjande ger allvarliga konsekvenser), riktighet 3 (felaktig eller manipulerad
+      information ger allvarliga konsekvenser) och tillgänglighet 2 (måttliga konsekvenser
+      vid otillgänglighet).
     </p>
     <div class="toc">
       <a href="#regelverk"><span class="n">00</span> Regelverken bakom kraven</a>
@@ -227,6 +229,8 @@
       <a href="#s10"><span class="n">10</span> Leverantörer, SaaS och molntjänster</a>
       <a href="#s11"><span class="n">11</span> K3 och AI-tjänster</a>
       <a href="#s12"><span class="n">12</span> Incidenter och sårbarheter</a>
+      <a href="#s13"><span class="n">13</span> Riktighet och spårbarhet (R3)</a>
+      <a href="#s14"><span class="n">14</span> Tillgänglighet (T2)</a>
     </div>
   </div>
 </header>
@@ -276,7 +280,7 @@
         <p>Kraven täcker även in kommunens interna regler och riktlinjer som beskrivs i olika styrdokument — till exempel informationssäkerhetspolicy och instruktioner för informationsklassning och riskanalys. Katalogen är alltså en samlad, systemnära uttolkning av både externa och interna regelverk.</p>
       </div>
     </div>
-    <div class="note"><strong>Avgränsning:</strong> katalogen gäller K3. Säkerhetsskyddsklassificerade uppgifter (skyddsnivå 4 — uppgifter av betydelse för Sveriges säkerhet) omfattas av ett separat regelverk enligt säkerhetsskyddslagen och får inte hanteras i systemet.</div>
+    <div class="note"><strong>Avgränsning:</strong> katalogen gäller klassningen K3 R3 T2. Säkerhetsskyddsklassificerade uppgifter (skyddsnivå 4 — uppgifter av betydelse för Sveriges säkerhet) omfattas av ett separat regelverk enligt säkerhetsskyddslagen och får inte hanteras i systemet.</div>
   </div>
 </section>
 
@@ -574,15 +578,69 @@
   </div>
 </section>
 
+<section id="s13">
+  <div class="wrap">
+    <div class="kicker">sektion 13</div>
+    <h2>13. Riktighet och spårbarhet (R3)</h2>
+    <p class="section-intro">
+      Riktighet 3 innebär att felaktig eller manipulerad information kan ge allvarliga
+      konsekvenser — fel slutsatser och fel åtgärder i vård och omsorg. Kraven nedan
+      kompletterar konfidentialitetskraven med skydd för informationens korrekthet.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">R3-01</td><td>Alla ändringar av ärendedata SKA loggas med vem som ändrade, vad som ändrades och när.</td><td class="check"></td></tr>
+          <tr><td class="id">R3-02</td><td>Ändringshistoriken SKA vara skyddad mot redigering och radering, även för administratörer.</td><td class="check"></td></tr>
+          <tr><td class="id">R3-03</td><td>Fastställt innehåll — beslut, utredningar och avslutade faser — SKA låsas eller versioneras så att ändringar i efterhand alltid är spårbara.</td><td class="check"></td></tr>
+          <tr><td class="id">R3-04</td><td>Validering och rimlighetskontroller av indata SKA genomföras server-side. Klientens validering får aldrig ensam betraktas som betrodd.</td><td class="check"></td></tr>
+          <tr><td class="id">R3-05</td><td>Säkerhetskopior och bilagor SKA skyddas mot manipulation, till exempel genom checksummor eller motsvarande integritetskontroller.</td><td class="check"></td></tr>
+          <tr><td class="id">R3-06</td><td>Informationens integritet SKA verifieras vid återställning från säkerhetskopia.</td><td class="check"></td></tr>
+          <tr><td class="id">R3-07</td><td>Organisations- och behörighetsdata som hämtas från externa källor SKA valideras vid inläsning. Fel SKA upptäckas och rapporteras.</td><td class="check"></td></tr>
+          <tr><td class="id">R3-08</td><td>Dataöverföringar mellan system SKA skyddas mot förvanskning genom integritetsskyddade protokoll.</td><td class="check"></td></tr>
+          <tr><td class="id">R3-09</td><td>Aggregeringar och statistik som lämnas till verksamheten SKA kunna härledas till underliggande grunddata.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">Riktighetskraven följer av R3 i klassningen. MCFFS och GDPR artikel 32 omfattar uttryckligen skydd av informationens riktighet, inte bara dess konfidentialitet.</div>
+  </div>
+</section>
+
+<section id="s14">
+  <div class="wrap">
+    <div class="kicker">sektion 14</div>
+    <h2>14. Tillgänglighet (T2)</h2>
+    <p class="section-intro">
+      Tillgänglighet 2 innebär att verksamheten tål viss nedtid — en avvikelse kan vänta
+      några timmar utan allvarlig skada. Kraven nedan preciserar därför K3-86 och sätter
+      en medveten, måttlig ambitionsnivå för driften.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">T2-01</td><td>RTO och RPO SKA fastställas utifrån T2. Som riktvärde BÖR återställning kunna ske inom en arbetsdag och dataförlust begränsas till senaste dygnets säkerhetskopia.</td><td class="check"></td></tr>
+          <tr><td class="id">T2-02</td><td>Grundläggande driftövervakning med larm vid driftstörning SKA finnas.</td><td class="check"></td></tr>
+          <tr><td class="id">T2-03</td><td>En dokumenterad återstartsrutin SKA finnas och vara testad.</td><td class="check"></td></tr>
+          <tr><td class="id">T2-04</td><td>Planerade underhållsfönster SKA kommuniceras till verksamheten i förväg.</td><td class="check"></td></tr>
+          <tr><td class="id">T2-05</td><td>Driftstörningar som påverkar verksamheten SKA kommuniceras till berörda.</td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">T2 begränsar snarare än utökar: högtillgänglighetslösningar som klustring eller redundans över flera siter krävs inte — grundläggande övervakning, larm och en testad återstartsrutin är tillräckligt. Riktvärdena i T2-01 fastställs slutligt tillsammans med verksamheten.</div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
     <div>
       <p class="mono">avvikelse-tech-sprint · Sundsvalls kommun</p>
-      <p>Säkerhetskrav K3 — kravkatalog för avvikelsehanteringen inom välfärdssektorn.</p>
+      <p>Säkerhetskrav K3 R3 T2 — kravkatalog för avvikelsehanteringen inom välfärdssektorn.</p>
     </div>
     <div>
       <p><a href="index.html">← Till sprintsidan</a></p>
-      <p class="mono">// 113 krav · 12 sektioner</p>
+      <p class="mono">// 127 krav · 14 sektioner</p>
     </div>
   </div>
 </footer>

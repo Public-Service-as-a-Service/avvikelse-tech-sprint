@@ -10,8 +10,15 @@ utvecklingssprintar tillsammans med verksamheten.
 
 ## Innehåll
 
-- `index.html` — hela webbplatsen som en fristående statisk sida (ingen build,
+- `index.html` — sprintsidan som en fristående statisk sida (ingen build,
   inga beroenden). Öppna direkt i webbläsaren eller servera som statisk fil.
+- `sakerhetskrav.html` — kravkatalogen Säkerhetskrav K3.
+- `favicon.svg` — sajtens favicon.
+
+## Deploy
+
+Sajten deployas via DokPloy. En webhook på detta repo triggar en ny deploy
+vid varje push till `main`.
 
 ## Uppdatera sprintloggen
 

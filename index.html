@@ -609,7 +609,7 @@
         <div class="day-label"><span class="name">Onsdag</span><span class="date">12 aug</span></div>
         <div>
           <h3>Halvtidsdemo 15:00–16:00</h3>
-          <p>Detta bestäms senare.</p>
+          <p>Fokus på en demo-bar helhet: labels och platser på plats (även om listorna inte är korrekta än), VOF uppsatt parallellt med IAF, fortsatt arbete med regelverk och behörighetsstyrning. Halvtidsdemo på eftermiddagen där vi visar hur långt vi kommit.</p>
         </div>
       </div>
       <div class="day">
@@ -670,14 +670,15 @@
       </div>
       <div class="log-entry">
         <div class="log-date">Tisdag 11 aug</div>
-        <h3>Två parallella spår</h3>
-        <p>Planen för dagen: bygga ihop ett fungerande flöde där behörighetsstyrningen kan testas mot organisationen som den ser ut idag, och parallellt reda ut frågorna kring Metakatalogen och organisationsförändringar — bland annat genom en avstämning med systemförvaltaren för att förstå hur förändringar hanteras i praktiken.</p>
-        <p>Behörigheterna är ingen blocker för övriga delar: frontend fortsätter med handläggarvyerna (faser, beslut, tilldelning) och ett enklare admin-gränssnitt för tillfälliga behörigheter påbörjas.</p>
+        <h3>Organisationsdata utredd &amp; formulär på plats</h3>
+        <p>Avstämningen om organisationsträdet gav klarhet: källan används idag främst för fakturering och kontering, men vi kan ändå bygga på den — vi tar en lokal kopia och förhåller oss till det som finns. Grundproblemet är att platser inte finns mappade alls, så det löser vi på vår sida.</p>
+        <p>I applikationen sattes tre utredningsformulär upp (ärendeformulären var klara sedan tidigare). Registreringsflödet förbättrades med inloggning och behörighetskontroll, men ärenden får ännu inte rätt plats eftersom labels saknas — det behöver åtgärdas.</p>
       </div>
-      <div class="log-entry pending">
+      <div class="log-entry">
         <div class="log-date">Onsdag 12 aug</div>
         <h3>Handläggning &amp; halvtidsdemo</h3>
-        <p class="placeholder">Fylls på under sprinten…</p>
+        <p>Vi släpper organisationsträds-stöket för stunden — fokus på att komma så långt att vi har något bra att visa på halvtidsdemon i eftermiddag.</p>
+        <p>Backend fortsätter med regelverk och behörighetsstyrning. Frontend sätter upp VOF parallellt med IAF (samma funktionalitet men åtskilda organisationsträd — den som är inloggad för VOF ska inte se IAF:s träd och tvärtom), och alla labels/platser (Backend) ska in även om listorna inte är korrekta än — det måste gå att lägga ärenden — och AccessMapper används likaså med den data som finns. Testanvändarna stäms av med Henrik.</p>
       </div>
       <div class="log-entry pending">
         <div class="log-date">Torsdag 13 aug</div>
@@ -714,12 +715,22 @@
       </div>
       <div class="card question">
         <h3><span class="icon">🗂️</span> Metakatalogen &amp; organisationsförändringar</h3>
-        <p>Hur väl speglar Metakatalogen verkligheten för VOF/IAF (strukturerna är inte enhetliga)? Ska den vara master, och hur fångar vi upp organisationsförändringar — manuellt eller via en loader-tjänst/schemajobb som synkar organisationsdata till AccessMapper?</p>
+        <p>Delvis utredd (tis 11/8): källan används idag främst för fakturering och kontering, men vi kan bygga på en lokal kopia av den. Platser saknas dock helt — ingen mappning finns — och hanteras därför på vår sida. Kvar att avgöra: ska den vara master, och hur fångar vi upp organisationsförändringar — manuellt eller via en loader-tjänst/schemajobb som synkar organisationsdata till AccessMapper?</p>
         <span class="q-owner">Pelle</span>
       </div>
       <div class="card question">
         <h3><span class="icon">🕓</span> Historik för behörigheter</h3>
         <p>Hur ska tillfälliga behörigheter tidsbegränsas (giltig från–till, tas aldrig bort) och historiken bevaras så att det går att se vem som hade access till vad och när? Ligger ansvaret i AccessMapper eller separat?</p>
+        <span class="q-owner">ej utsedd ännu</span>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🔀</span> Rätt förvaltning för dubbelanställda</h3>
+        <p>Vikarier och timanställda kan vara anställda på både VOF och IAF och växla dag för dag — hur vet vi vart en avvikelse ska skickas? Möjliga källor: dagens schema från schemasystemet (styr redan bemanning och behörigheter, t.ex. medicinskåp) eller delade mobiler kopplade till boendet. Kortsiktigt kan rapportören få välja förvaltning själv. Utredningspunkt — löses inte denna vecka. Pelle kollar status på delade mobiler med Niklas Johansson.</p>
+        <span class="q-owner">Pelle</span>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🏢</span> Externa utförares användare</h3>
+        <p>Externa utförare (privata bolag) finns inte i organisationsträdet och saknar schema. Ansvarig hos utföraren måste själv lägga in sina användare via leverantörsportalen — annars kan de inte logga in. Hur användarhanteringen ska fungera i praktiken är en egen fråga som hanteras efter sprinten.</p>
         <span class="q-owner">ej utsedd ännu</span>
       </div>
     </div>

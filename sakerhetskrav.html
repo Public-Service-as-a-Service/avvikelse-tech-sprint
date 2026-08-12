@@ -283,6 +283,7 @@
       <a href="#s12"><span class="n">12</span> Incidenter och sårbarheter</a>
       <a href="#s13"><span class="n">13</span> Riktighet och spårbarhet (R3)</a>
       <a href="#s14"><span class="n">14</span> Tillgänglighet (T2)</a>
+      <a href="#s15"><span class="n">15</span> Patientdata och vårdlagstiftning</a>
     </div>
     <div class="legend">
       <h3>Så läser du kolumnen Påverkan</h3>
@@ -333,6 +334,26 @@
         <p>Reglerar vilka uppgifter i offentlig verksamhet som omfattas av sekretess — till exempel uppgifter om enskildas hälsa och personliga förhållanden inom vård och omsorg. 10 kap. 2 a § styr när sekretessbelagda uppgifter får lämnas ut till en aktör som endast tekniskt bearbetar eller lagrar dem, till exempel en molnleverantör.</p>
       </div>
       <div class="law">
+        <h3>PSL</h3>
+        <p class="expand">Patientsäkerhetslagen (2010:659)</p>
+        <p>Kräver att vårdgivaren bedriver systematiskt patientsäkerhetsarbete: händelser som medfört eller kunnat medföra vårdskada ska utredas, allvarliga vårdskador anmälas till IVO (lex Maria) och en patientsäkerhetsberättelse upprättas årligen. Avvikelsehanteringen är ett direkt verktyg för dessa skyldigheter — anmälningsspåret till IVO löper parallellt med incidentrapporteringen enligt cybersäkerhetslagen och GDPR.</p>
+      </div>
+      <div class="law">
+        <h3>HSL</h3>
+        <p class="expand">Hälso- och sjukvårdslagen (2017:30)</p>
+        <p>Ramlag som kräver att vårdens kvalitet systematiskt och fortlöpande utvecklas och säkras (5 kap. 4 §). Kravet konkretiseras i Socialstyrelsens föreskrifter om ledningssystem för systematiskt kvalitetsarbete (SOSFS 2011:9), där avvikelsehantering, riskanalyser och egenkontroll är obligatoriska delar. HSL ställer få egna tekniska krav men gör avvikelseprocessen i sig till en författningsreglerad process.</p>
+      </div>
+      <div class="law">
+        <h3>PDL</h3>
+        <p class="expand">Patientdatalagen (2008:355)</p>
+        <p>Reglerar behandling av personuppgifter inom hälso- och sjukvården — även för kvalitetssäkring, inte bara journalföring. Kräver behörighetsstyrning efter behov (inre sekretess), åtkomstkontroll genom loggning och logguppföljning samt patientens rätt att på begäran få veta vilken åtkomst som skett till uppgifter om hen. Gäller avvikelser som innehåller patientuppgifter även när de inte utgör journalhandlingar.</p>
+      </div>
+      <div class="law">
+        <h3>HSLF-FS 2016:40</h3>
+        <p class="expand">Socialstyrelsens föreskrifter om journalföring och behandling av personuppgifter i hälso- och sjukvården</p>
+        <p>Konkretiserar patientdatalagen i praktiska åtgärder: dokumenterad behovs- och riskanalys som grund för behörighetstilldelning, systematisk och återkommande kontroll av åtkomstloggar samt stark autentisering och kryptering vid åtkomst över öppna nät. Sektion 15 samlar de krav som följer av PSL, HSL, PDL och dessa föreskrifter.</p>
+      </div>
+      <div class="law">
         <h3>K3 · KLASSA</h3>
         <p class="expand">Informationsklassning enligt SKR:s modell</p>
         <p>Kommunens information klassas utifrån konfidentialitet, riktighet och tillgänglighet. K3 är konfidentialitetsnivå 3 — information där ett röjande skulle ge allvarliga konsekvenser för verksamheten eller enskilda. Det är den klassningen som avgör att kraven på den här sidan gäller.</p>
@@ -369,7 +390,7 @@
       <button type="button" class="chip t-sty" data-cat="Styrning · team+org">Styrning · team+org</button>
       <button type="button" class="chip t-avt" data-cat="Avtal">Avtal</button>
     </div>
-    <p class="filter-count" id="filter-count">Visar <strong>127</strong> av 127 krav.</p>
+    <p class="filter-count" id="filter-count">Visar <strong>134</strong> av 134 krav.</p>
   </div>
 </div>
 
@@ -721,6 +742,36 @@
   </div>
 </section>
 
+<section id="s15">
+  <div class="wrap">
+    <div class="kicker">sektion 15</div>
+    <h2>15. Patientdata och vårdlagstiftning (PSL, HSL, PDL)</h2>
+    <p class="section-intro">
+      Avvikelser kan innehålla patientuppgifter, till exempel personnummer, men utgör inte
+      journalhandlingar. Patientdatalagens regler om personuppgiftsbehandling, inre sekretess
+      och åtkomstkontroll gäller ändå — det är journalföringsreglerna som inte är tillämpliga.
+      Kraven nedan kompletterar katalogen med det som följer av patientsäkerhetslagen,
+      hälso- och sjukvårdslagen, patientdatalagen och HSLF-FS 2016:40.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Id</th><th>Krav</th><th class="impact">Påverkan</th><th class="check">Uppfyllt</th></tr></thead>
+        <tbody>
+          <tr><td class="id">PD-01</td><td>Behörighetstilldelning till avvikelser som innehåller patientuppgifter SKA baseras på en dokumenterad behovs- och riskanalys enligt HSLF-FS 2016:40.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Vårdgivaren måste dokumentera vilken åtkomst varje personalkategori behöver och lägga analysen till grund för behörighetsmodellen — går längre än principen i K3-11.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">PD-02</td><td>Åtkomst till patientkopplade avvikelser SKA kontrolleras systematiskt och återkommande genom logguppföljning, till exempel stickprovsvis granskning.</td><td class="impact"><div class="imp"><span class="tag t-rut">Rutin · org</span><span class="how">Verksamheten måste etablera en återkommande loggranskningsrutin — en verksamhetskontroll av vem som faktiskt tittat, utöver den tekniska larmningen i K3-79.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">PD-03</td><td>Åtkomstloggen SKA kunna sammanställas per patient så att patienten på begäran kan få information om vilken åtkomst som förekommit till uppgifter om hen.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Loggutdrag per patient måste kunna tas fram i läsbar form — ställer krav på loggformatet i K3-73.</span></div><div class="imp"><span class="tag t-rut">Rutin · org</span><span class="how">Rutin för att hantera och besvara patientens begäran måste finnas.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">PD-04</td><td>Incidenter och avvikelser SKA bedömas mot anmälningsskyldigheten enligt lex Maria (PSL 3 kap. 5 §) respektive lex Sarah (SoL 14 kap. 7 §), utöver rapporteringskraven i cybersäkerhetslagen och GDPR.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Incidentprocessen i K3-111 måste kompletteras med IVO-spåret — en IT-incident som påverkar patientsäkerheten kan utlösa flera rapporteringsspår samtidigt.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">PD-05</td><td>Avvikelsedata SKA årligen kunna aggregeras och sammanställas som underlag till patientsäkerhetsberättelsen (PSL 3 kap. 10 §).</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Aggregerings- och exportfunktioner måste finnas så att årets avvikelser kan sammanställas — bygger på härledbarheten i R3-09.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">PD-06</td><td>Bevarande- och gallringstider för avvikelser med patientuppgifter SKA fastställas i kommunens dokumenthanteringsplan. Radering enligt K3-39 och K3-96 SKA ske med beaktande av dessa tider.</td><td class="impact"><div class="imp"><span class="tag t-sty">Styrning · org</span><span class="how">Avvikelser är allmänna handlingar — gallring kräver stöd i dokumenthanteringsplanen och får inte ske genom generella raderingsrutiner.</span></div></td><td class="check"></td></tr>
+          <tr><td class="id">PD-07</td><td>Personnummer och andra direkta patientidentifierare SKA registreras i därför avsedda strukturerade fält, inte i fritext.</td><td class="impact"><div class="imp"><span class="tag t-utv">Utveckling</span><span class="how">Datamodellen måste ha separata fält för identifierare så att behörighetsstyrning, maskning, loggutdrag och gallring fungerar per patient.</span></div><div class="imp"><span class="tag t-rut">Rutin · org</span><span class="how">Rapportörer måste instrueras att inte skriva personnummer i fritextfält.</span></div></td><td class="check"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Avgränsning:</strong> eftersom avvikelserna inte är journalhandlingar gäller inte patientdatalagens journalföringsregler — till exempel kravet på minst tio års bevarande. Bevarande och gallring styrs i stället av arkivlagen och kommunens dokumenthanteringsplan (PD-06). Patientdatalagens regler om inre sekretess, åtkomstkontroll och logguppföljning gäller dock fullt ut så snart avvikelsen innehåller patientuppgifter.</div>
+    <div class="note">För avvikelser inom SoL-/LSS-verksamhet utan hälso- och sjukvårdsinslag gäller SoLPuL i stället för patientdatalagen, och lex Sarah i stället för lex Maria. Kraven ovan tillämpas då på motsvarande sätt för brukaruppgifter.</div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
     <div>
@@ -729,7 +780,7 @@
     </div>
     <div>
       <p><a href="index.html">← Till sprintsidan</a></p>
-      <p class="mono">// 127 krav · 14 sektioner</p>
+      <p class="mono">// 134 krav · 15 sektioner</p>
     </div>
   </div>
 </footer>

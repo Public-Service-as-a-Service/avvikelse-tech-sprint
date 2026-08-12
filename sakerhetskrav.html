@@ -187,6 +187,31 @@
   .legend li { font-size: 0.88rem; color: var(--text-dim); }
   .legend .tag { margin-right: 9px; }
 
+  /* ---------- Kategorifilter ---------- */
+  .filterbar {
+    background: var(--panel); border: 1px solid var(--panel-border);
+    border-radius: 12px; padding: 20px 22px; margin-top: 48px;
+  }
+  .filterbar h3 { font-size: 0.95rem; margin-bottom: 4px; }
+  .filterbar .filter-hint { font-size: 0.85rem; color: var(--text-faint); margin-bottom: 14px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    cursor: pointer; user-select: none;
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 6px 15px; border-radius: 999px;
+    border: 1px solid; transition: color 0.15s, border-color 0.15s, background 0.15s, opacity 0.15s;
+  }
+  .chip:not(.active) {
+    color: var(--text-faint); border-color: var(--panel-border); background: transparent;
+  }
+  .chip:not(.active):hover { color: var(--text-dim); border-color: var(--text-faint); }
+  .chip-all.active { color: var(--text); border-color: rgba(215, 225, 242, 0.5); background: rgba(215, 225, 242, 0.08); }
+  .filter-count { font-size: 0.85rem; color: var(--text-dim); margin-top: 14px; }
+  .filter-count strong { color: var(--accent); font-family: var(--mono); font-weight: 600; }
+  tr.filter-hidden { display: none; }
+  section.filter-hidden { display: none; }
+
   .note {
     border-left: 3px solid var(--accent-3);
     background: rgba(181, 140, 255, 0.06);
@@ -326,6 +351,27 @@
     <div class="note"><strong>Avgränsning:</strong> katalogen gäller klassningen K3 R3 T2. Säkerhetsskyddsklassificerade uppgifter (skyddsnivå 4 — uppgifter av betydelse för Sveriges säkerhet) omfattas av ett separat regelverk enligt säkerhetsskyddslagen och får inte hanteras i systemet.</div>
   </div>
 </section>
+
+<div class="wrap">
+  <div class="filterbar" id="kategorifilter">
+    <h3>Filtrera på kategori</h3>
+    <p class="filter-hint">Välj en eller flera kategorier för att bara visa de krav som påverkar dem. Sektioner utan träffar döljs.</p>
+    <div class="chips">
+      <button type="button" class="chip chip-all active" data-cat="*">Visa alla</button>
+      <button type="button" class="chip t-utv" data-cat="Utveckling">Utveckling</button>
+      <button type="button" class="chip t-app" data-cat="Applikation">Applikation</button>
+      <button type="button" class="chip t-inf" data-cat="Infrastruktur">Infrastruktur</button>
+      <button type="button" class="chip t-rut" data-cat="Rutin · team">Rutin · team</button>
+      <button type="button" class="chip t-rut" data-cat="Rutin · org">Rutin · org</button>
+      <button type="button" class="chip t-rut" data-cat="Rutin · team+org">Rutin · team+org</button>
+      <button type="button" class="chip t-sty" data-cat="Styrning · team">Styrning · team</button>
+      <button type="button" class="chip t-sty" data-cat="Styrning · org">Styrning · org</button>
+      <button type="button" class="chip t-sty" data-cat="Styrning · team+org">Styrning · team+org</button>
+      <button type="button" class="chip t-avt" data-cat="Avtal">Avtal</button>
+    </div>
+    <p class="filter-count" id="filter-count">Visar <strong>127</strong> av 127 krav.</p>
+  </div>
+</div>
 
 <section id="s1">
   <div class="wrap">
@@ -687,6 +733,63 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function () {
+  var chips = Array.prototype.slice.call(document.querySelectorAll('#kategorifilter .chip'));
+  var allChip = document.querySelector('#kategorifilter .chip-all');
+  var countEl = document.getElementById('filter-count');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('section tbody tr'));
+  var totalRows = rows.length;
+
+  rows.forEach(function (row) {
+    row._cats = Array.prototype.slice.call(row.querySelectorAll('.tag')).map(function (t) {
+      return t.textContent.trim();
+    });
+  });
+
+  function selectedCats() {
+    return chips
+      .filter(function (c) { return c !== allChip && c.classList.contains('active'); })
+      .map(function (c) { return c.getAttribute('data-cat'); });
+  }
+
+  function apply() {
+    var sel = selectedCats();
+    var showAll = sel.length === 0;
+    var visible = 0;
+
+    rows.forEach(function (row) {
+      var match = showAll || row._cats.some(function (c) { return sel.indexOf(c) !== -1; });
+      row.classList.toggle('filter-hidden', !match);
+      if (match) visible++;
+    });
+
+    document.querySelectorAll('section').forEach(function (section) {
+      var sectionRows = section.querySelectorAll('tbody tr');
+      if (sectionRows.length === 0) return;
+      var anyVisible = Array.prototype.some.call(sectionRows, function (r) {
+        return !r.classList.contains('filter-hidden');
+      });
+      section.classList.toggle('filter-hidden', !anyVisible);
+    });
+
+    allChip.classList.toggle('active', showAll);
+    countEl.innerHTML = 'Visar <strong>' + visible + '</strong> av ' + totalRows + ' krav.';
+  }
+
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      if (chip === allChip) {
+        chips.forEach(function (c) { c.classList.remove('active'); });
+      } else {
+        chip.classList.toggle('active');
+      }
+      apply();
+    });
+  });
+})();
+</script>
 
 </body>
 </html>

@@ -3,24 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Säkerhetskrav K3 R3 T2 · Avvikelsehantering · Sundsvalls kommun</title>
-<meta name="description" content="Säkerhetskrav för informationsklassningen K3 R3 T2 — kravkatalog för avvikelsehanteringen inom välfärdssektorn i Sundsvalls kommun.">
+<title>Säkerhetskrav K3 · VOF/IAF · Sundsvalls kommun</title>
+<meta name="description" content="Säkerhetskrav för K3-klassad information — gäller alla lösningar som används av vård- och omsorgsförvaltningen och individ- och arbetsmarknadsförvaltningen i Sundsvalls kommun.">
+<meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
   :root {
-    --bg: #0a0e16;
-    --bg-alt: #0e1420;
-    --panel: #111a2b;
-    --panel-border: #1e2c45;
-    --text: #d7e1f2;
-    --text-dim: #8fa1bd;
-    --text-faint: #5c6c88;
-    --accent: #3ddc97;
-    --accent-2: #4cc3ff;
-    --accent-3: #b58cff;
-    --warn: #ffb454;
+    --bg: #eef1f5;
+    --panel: #ffffff;
+    --panel-border: #d5dce5;
+    --navy: #14304d;
+    --navy-deep: #0c2036;
+    --navy-soft: #eaf0f6;
+    --text: #22303f;
+    --text-dim: #55657a;
+    --text-faint: #8493a8;
+    --accent: #a12d26;
+    --amber: #96660a;
+    --ok: #1e7a4c;
     --mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -31,107 +34,111 @@
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
-  ::selection { background: rgba(61, 220, 151, 0.3); }
+  ::selection { background: rgba(20, 48, 77, 0.18); }
 
-  .grid-bg {
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(76, 195, 255, 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(76, 195, 255, 0.045) 1px, transparent 1px);
-    background-size: 42px 42px;
-    mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 75%);
-    pointer-events: none;
-    z-index: 0;
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Klassningsremsa ---------- */
+  .klass-strip {
+    background: var(--accent); color: #fff;
+    font-family: var(--mono); font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    text-align: center; padding: 7px 16px;
   }
-
-  .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 
   /* ---------- Nav ---------- */
   nav {
     position: sticky; top: 0; z-index: 10;
-    background: rgba(10, 14, 22, 0.85);
+    background: rgba(255, 255, 255, 0.93);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--panel-border);
+    border-bottom: 2px solid var(--navy);
   }
   .nav-inner {
-    max-width: 1080px; margin: 0 auto; padding: 14px 24px;
+    max-width: 1080px; margin: 0 auto; padding: 13px 24px;
     display: flex; align-items: center; justify-content: space-between; gap: 16px;
   }
   .nav-logo {
-    font-family: var(--mono); font-size: 14px; color: var(--text);
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 15px; font-weight: 700; color: var(--navy);
     text-decoration: none; white-space: nowrap;
   }
-  .nav-logo .prompt { color: var(--accent); }
-  .nav-logo .cursor {
-    display: inline-block; width: 8px; height: 15px;
-    background: var(--accent); vertical-align: text-bottom; margin-left: 3px;
-    animation: blink 1.1s steps(1) infinite;
-  }
-  @keyframes blink { 50% { opacity: 0; } }
-  .nav-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .nav-logo svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .nav-links { display: flex; gap: 22px; flex-wrap: wrap; align-items: center; }
   .nav-links a {
     color: var(--text-dim); text-decoration: none; font-size: 14px;
     transition: color 0.15s;
   }
-  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover { color: var(--navy); }
   @media (max-width: 720px) { .nav-links { display: none; } }
 
   /* ---------- Hero ---------- */
-  header { padding: 72px 0 48px; }
+  header {
+    background: var(--navy-deep); color: #e8eef5;
+    padding: 60px 0 48px;
+    border-bottom: 4px solid var(--accent);
+  }
   .badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--mono); font-size: 12.5px; color: var(--accent-2);
-    border: 1px solid rgba(76, 195, 255, 0.35);
-    background: rgba(76, 195, 255, 0.07);
-    padding: 5px 14px; border-radius: 999px; margin-bottom: 26px;
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; color: #ffd9d6;
+    border: 1px solid rgba(255, 217, 214, 0.45);
+    background: rgba(161, 45, 38, 0.35);
+    padding: 6px 14px; border-radius: 4px; margin-bottom: 26px;
   }
-  .badge .dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--accent); box-shadow: 0 0 8px var(--accent);
-    animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse { 50% { opacity: 0.4; } }
   h1 {
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    line-height: 1.1; letter-spacing: -0.02em; font-weight: 800;
-    margin-bottom: 8px;
+    font-family: var(--serif);
+    font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+    line-height: 1.15; letter-spacing: -0.01em; font-weight: 700;
+    color: #ffffff; margin-bottom: 6px;
   }
-  h1 .gradient {
-    background: linear-gradient(92deg, var(--accent) 5%, var(--accent-2) 55%, var(--accent-3) 100%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
+  .class-chips { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0 4px; }
+  .class-chip {
+    font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: #fff;
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 4px; padding: 5px 12px;
   }
   .hero-sub {
-    font-size: clamp(1.02rem, 2vw, 1.2rem);
-    color: var(--text-dim); max-width: 48em; margin: 18px 0 0;
+    font-size: clamp(1rem, 2vw, 1.13rem);
+    color: #b9c8d8; max-width: 50em; margin: 16px 0 0;
   }
+  .scope {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px; margin-top: 26px;
+    font-size: 0.95rem; color: #cfdae6; max-width: 880px;
+  }
+  .scope strong { color: #ffffff; }
 
   .toc {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 10px; margin-top: 40px;
+    gap: 10px; margin-top: 36px;
   }
   .toc a {
     display: flex; gap: 12px; align-items: baseline;
-    background: var(--panel); border: 1px solid var(--panel-border);
-    border-radius: 10px; padding: 12px 16px;
-    color: var(--text-dim); text-decoration: none; font-size: 0.9rem;
-    transition: border-color 0.15s, color 0.15s;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 8px; padding: 11px 15px;
+    color: #b9c8d8; text-decoration: none; font-size: 0.9rem;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
   }
-  .toc a:hover { border-color: rgba(76, 195, 255, 0.45); color: var(--text); }
-  .toc .n { font-family: var(--mono); font-size: 12px; color: var(--accent); flex-shrink: 0; }
+  .toc a:hover { border-color: rgba(255, 255, 255, 0.45); color: #fff; background: rgba(255, 255, 255, 0.09); }
+  .toc .n { font-family: var(--mono); font-size: 12px; color: #ffce6b; flex-shrink: 0; }
 
   /* ---------- Sections ---------- */
-  section { padding: 56px 0 8px; }
+  section { padding: 52px 0 8px; }
   section:last-of-type { padding-bottom: 56px; }
   .kicker {
-    font-family: var(--mono); font-size: 13px; letter-spacing: 0.08em;
-    color: var(--accent); margin-bottom: 10px;
+    font-size: 12.5px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
   }
-  .kicker::before { content: "// "; color: var(--text-faint); }
   h2 {
+    font-family: var(--serif);
     font-size: clamp(1.35rem, 3vw, 1.8rem);
-    letter-spacing: -0.01em; font-weight: 750; margin-bottom: 16px;
+    letter-spacing: -0.01em; font-weight: 700; color: var(--navy);
+    margin-bottom: 16px;
   }
   .section-intro { color: var(--text-dim); max-width: 48em; margin-bottom: 24px; font-size: 1rem; }
 
@@ -139,26 +146,27 @@
   .table-wrap {
     overflow-x: auto;
     border: 1px solid var(--panel-border);
-    border-radius: 12px;
+    border-radius: 10px;
     background: var(--panel);
+    box-shadow: 0 1px 3px rgba(16, 32, 52, 0.06);
   }
   table { width: 100%; border-collapse: collapse; min-width: 920px; }
   th {
-    font-family: var(--mono); font-size: 11.5px; font-weight: 600;
+    font-size: 11.5px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--text-faint); text-align: left;
-    padding: 12px 18px; border-bottom: 1px solid var(--panel-border);
-    background: rgba(16, 24, 39, 0.7);
+    color: #ffffff; text-align: left;
+    padding: 12px 18px;
+    background: var(--navy);
   }
   td {
-    padding: 11px 18px; border-bottom: 1px solid rgba(30, 44, 69, 0.5);
+    padding: 11px 18px; border-bottom: 1px solid #e6ebf1;
     font-size: 0.93rem; vertical-align: top;
   }
   tbody tr:last-child td { border-bottom: none; }
-  tbody tr:hover { background: rgba(76, 195, 255, 0.04); }
-  td.id { font-family: var(--mono); font-size: 12.5px; color: var(--accent-2); white-space: nowrap; }
+  tbody tr:hover { background: var(--navy-soft); }
+  td.id { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--navy); white-space: nowrap; }
   th.check, td.check { width: 100px; text-align: center; }
-  td.check .ok { color: var(--accent); font-weight: 700; font-size: 1rem; }
+  td.check .ok { color: var(--ok); font-weight: 700; font-size: 1rem; }
 
   /* ---------- Påverkan-kolumn ---------- */
   th.impact, td.impact { min-width: 300px; width: 36%; }
@@ -171,18 +179,19 @@
     padding: 1px 8px; border-radius: 999px; white-space: nowrap;
     border: 1px solid; margin-right: 7px; vertical-align: middle;
   }
-  .t-utv { color: #4cc3ff; border-color: rgba(76, 195, 255, 0.4); background: rgba(76, 195, 255, 0.08); }
-  .t-app { color: #3ddc97; border-color: rgba(61, 220, 151, 0.4); background: rgba(61, 220, 151, 0.08); }
-  .t-inf { color: #b58cff; border-color: rgba(181, 140, 255, 0.4); background: rgba(181, 140, 255, 0.08); }
-  .t-rut { color: #ffb454; border-color: rgba(255, 180, 84, 0.4); background: rgba(255, 180, 84, 0.08); }
-  .t-sty { color: #ff7eb6; border-color: rgba(255, 126, 182, 0.4); background: rgba(255, 126, 182, 0.08); }
-  .t-avt { color: #5ce1d6; border-color: rgba(92, 225, 214, 0.4); background: rgba(92, 225, 214, 0.08); }
+  .t-utv { color: #175a86; border-color: #a8cbe0; background: #e9f3f9; }
+  .t-app { color: #1e7a4c; border-color: #a9d8bf; background: #e9f6ef; }
+  .t-inf { color: #5b4394; border-color: #c8bce6; background: #f1edf9; }
+  .t-rut { color: #96660a; border-color: #e3c990; background: #faf3e2; }
+  .t-sty { color: #a1284f; border-color: #e6b3c6; background: #f9ecf1; }
+  .t-avt { color: #0e6e66; border-color: #9ed4cf; background: #e7f5f4; }
 
   .legend {
     background: var(--panel); border: 1px solid var(--panel-border);
-    border-radius: 12px; padding: 20px 22px; margin-top: 32px;
+    border-radius: 10px; padding: 20px 22px; margin-top: 32px;
+    box-shadow: 0 1px 3px rgba(16, 32, 52, 0.06);
   }
-  .legend h3 { font-size: 0.95rem; margin-bottom: 12px; }
+  .legend h3 { font-size: 0.95rem; color: var(--navy); margin-bottom: 12px; }
   .legend ul { list-style: none; display: grid; gap: 8px; }
   .legend li { font-size: 0.88rem; color: var(--text-dim); }
   .legend .tag { margin-right: 9px; }
@@ -190,9 +199,10 @@
   /* ---------- Kategorifilter ---------- */
   .filterbar {
     background: var(--panel); border: 1px solid var(--panel-border);
-    border-radius: 12px; padding: 20px 22px; margin-top: 48px;
+    border-radius: 10px; padding: 20px 22px; margin-top: 40px;
+    box-shadow: 0 1px 3px rgba(16, 32, 52, 0.06);
   }
-  .filterbar h3 { font-size: 0.95rem; margin-bottom: 4px; }
+  .filterbar h3 { font-size: 0.95rem; color: var(--navy); margin-bottom: 4px; }
   .filterbar .filter-hint { font-size: 0.85rem; color: var(--text-faint); margin-bottom: 14px; }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip {
@@ -203,70 +213,88 @@
     border: 1px solid; transition: color 0.15s, border-color 0.15s, background 0.15s, opacity 0.15s;
   }
   .chip:not(.active) {
-    color: var(--text-faint); border-color: var(--panel-border); background: transparent;
+    color: var(--text-faint); border-color: var(--panel-border); background: #ffffff;
   }
   .chip:not(.active):hover { color: var(--text-dim); border-color: var(--text-faint); }
-  .chip-all.active { color: var(--text); border-color: rgba(215, 225, 242, 0.5); background: rgba(215, 225, 242, 0.08); }
+  .chip-all.active { color: #ffffff; border-color: var(--navy); background: var(--navy); }
   .filter-count { font-size: 0.85rem; color: var(--text-dim); margin-top: 14px; }
   .filter-count strong { color: var(--accent); font-family: var(--mono); font-weight: 600; }
   tr.filter-hidden { display: none; }
   section.filter-hidden { display: none; }
 
   .note {
-    border-left: 3px solid var(--accent-3);
-    background: rgba(181, 140, 255, 0.06);
-    border-radius: 0 10px 10px 0;
+    border-left: 3px solid var(--amber);
+    background: #faf3e2;
+    border-radius: 0 8px 8px 0;
     padding: 16px 20px; margin-top: 20px;
-    font-size: 0.92rem; color: var(--text-dim); max-width: 860px;
+    font-size: 0.92rem; color: #5d5138; max-width: 860px;
   }
   .note + .note { margin-top: 12px; }
-  .note strong { color: var(--text); }
+  .note strong { color: #3f3722; }
 
   /* ---------- Regelverk ---------- */
   .law-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
   .law {
     background: var(--panel); border: 1px solid var(--panel-border);
-    border-radius: 12px; padding: 20px 22px;
+    border-top: 3px solid var(--navy);
+    border-radius: 8px; padding: 20px 22px;
+    box-shadow: 0 1px 3px rgba(16, 32, 52, 0.05);
   }
-  .law h3 { font-family: var(--mono); font-size: 0.95rem; color: var(--accent); margin-bottom: 4px; }
+  .law h3 { font-size: 0.98rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
   .law .expand { font-size: 0.82rem; color: var(--text-faint); margin-bottom: 10px; }
   .law p { font-size: 0.9rem; color: var(--text-dim); }
 
   /* ---------- Footer ---------- */
   footer {
-    border-top: 1px solid var(--panel-border);
-    padding: 44px 0 56px; margin-top: 40px;
+    background: var(--navy-deep);
+    border-top: 4px solid var(--accent);
+    padding: 40px 0 52px; margin-top: 56px;
   }
   footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-  footer p { font-size: 0.88rem; color: var(--text-faint); }
-  footer .mono { font-family: var(--mono); font-size: 12.5px; }
-  footer a { color: var(--text-dim); text-decoration: none; }
-  footer a:hover { color: var(--accent); }
+  footer p { font-size: 0.88rem; color: #8fa3b8; }
+  footer .mono { font-family: var(--mono); font-size: 12.5px; color: #b9c8d8; }
+  footer a { color: #d5e0ea; text-decoration: none; }
+  footer a:hover { color: #ffffff; }
 </style>
 </head>
 <body>
-<div class="grid-bg" aria-hidden="true"></div>
+<div class="klass-strip">Intern styrande handling · Sundsvalls kommun</div>
 
 <nav>
   <div class="nav-inner">
-    <a class="nav-logo" href="index.html"><span class="prompt">~/sprint $</span> avvikelse<span class="cursor"></span></a>
+    <a class="nav-logo" href="#top">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3z" fill="#14304d"/><path d="M9.2 12.1l2 2 3.8-4.1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      Säkerhetskrav K3 · VOF/IAF
+    </a>
     <div class="nav-links">
-      <a href="index.html">← Sprintsidan</a>
-      <a href="#top">Säkerhetskrav</a>
+      <a href="#regelverk">Regelverk</a>
+      <a href="#kategorifilter">Kravkatalog</a>
     </div>
   </div>
 </nav>
 
 <header id="top">
   <div class="wrap">
-    <div class="badge"><span class="dot"></span> Sundsvalls kommun · Kravkatalog</div>
-    <h1>Säkerhetskrav <span class="gradient">K3 · R3 · T2</span></h1>
+    <div class="badge">Sundsvalls kommun · Kravkatalog</div>
+    <h1>Säkerhetskrav för K3-klassad information</h1>
+    <div class="class-chips">
+      <span class="class-chip">K3 · Konfidentialitet — allvarliga konsekvenser vid röjande</span>
+      <span class="class-chip">R3 · Riktighet — allvarliga konsekvenser vid fel</span>
+      <span class="class-chip">T2 · Tillgänglighet — måttliga konsekvenser vid avbrott</span>
+    </div>
     <p class="hero-sub">
-      Avvikelsehanteringens samlade informationsklassning är K3 R3 T2 — konfidentialitet 3
-      (ett röjande ger allvarliga konsekvenser), riktighet 3 (felaktig eller manipulerad
-      information ger allvarliga konsekvenser) och tillgänglighet 2 (måttliga konsekvenser
-      vid otillgänglighet).
+      Kraven i katalogen gäller generellt för alla lösningar som hanterar K3-klassad
+      information och som används av vård- och omsorgsförvaltningen (VOF) och individ-
+      och arbetsmarknadsförvaltningen (IAF) — till exempel avvikelsehantering,
+      ekonomiskt bistånd och andra verksamhetssystem.
     </p>
+    <div class="scope">
+      <strong>Tillämpningsområde:</strong> konfidentialitetskraven (K3) gäller varje lösning i sin
+      helhet. Riktighets- och tillgänglighetskraven (sektion 13–14) är skrivna utifrån klassningen
+      R3 T2 och tillämpas utifrån respektive lösnings egen informationsklassning. Sektion 15 gäller
+      lösningar som behandlar patient- eller brukaruppgifter. Exempel i kravtexterna hämtas från
+      avvikelsehanteringen men kraven är inte begränsade till den.
+    </div>
     <div class="toc">
       <a href="#regelverk"><span class="n">00</span> Regelverken bakom kraven</a>
       <a href="#s1"><span class="n">01</span> Informationsklassning och grundläggande arkitektur</a>
@@ -285,6 +313,10 @@
       <a href="#s14"><span class="n">14</span> Tillgänglighet (T2)</a>
       <a href="#s15"><span class="n">15</span> Patientdata och vårdlagstiftning</a>
     </div>
+  </div>
+</header>
+
+<div class="wrap">
     <div class="legend">
       <h3>Så läser du kolumnen Påverkan</h3>
       <p style="font-size:0.88rem; color:var(--text-dim); margin-bottom:14px;">
@@ -301,8 +333,7 @@
         <li><span class="tag t-avt">Avtal</span> Krav som måste regleras i avtal med leverantör — PuB-avtal, exitvillkor, revisionsrätt.</li>
       </ul>
     </div>
-  </div>
-</header>
+</div>
 
 <section id="regelverk">
   <div class="wrap">
@@ -747,8 +778,8 @@
     <div class="kicker">sektion 15</div>
     <h2>15. Patientdata och vårdlagstiftning (PSL, HSL, PDL)</h2>
     <p class="section-intro">
-      Avvikelser kan innehålla patientuppgifter, till exempel personnummer, men utgör inte
-      journalhandlingar. Patientdatalagens regler om personuppgiftsbehandling, inre sekretess
+      Ärenden i förvaltningarnas lösningar — till exempel avvikelser — kan innehålla
+      patientuppgifter, såsom personnummer, men utgör inte journalhandlingar. Patientdatalagens regler om personuppgiftsbehandling, inre sekretess
       och åtkomstkontroll gäller ändå — det är journalföringsreglerna som inte är tillämpliga.
       Kraven nedan kompletterar katalogen med det som följer av patientsäkerhetslagen,
       hälso- och sjukvårdslagen, patientdatalagen och HSLF-FS 2016:40.
@@ -775,12 +806,11 @@
 <footer>
   <div class="wrap">
     <div>
-      <p class="mono">avvikelse-tech-sprint · Sundsvalls kommun</p>
-      <p>Säkerhetskrav K3 R3 T2 — kravkatalog för avvikelsehanteringen inom välfärdssektorn.</p>
+      <p class="mono">Säkerhetskrav K3 · Sundsvalls kommun</p>
+      <p>Gäller alla lösningar som hanterar K3-klassad information inom VOF och IAF.</p>
     </div>
     <div>
-      <p><a href="index.html">← Till sprintsidan</a></p>
-      <p class="mono">// 134 krav · 15 sektioner</p>
+      <p class="mono">134 krav · 15 sektioner</p>
     </div>
   </div>
 </footer>

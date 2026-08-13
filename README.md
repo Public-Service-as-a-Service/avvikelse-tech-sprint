@@ -12,7 +12,9 @@ utvecklingssprintar tillsammans med verksamheten.
 
 - `index.html` — sprintsidan som en fristående statisk sida (ingen build,
   inga beroenden). Öppna direkt i webbläsaren eller servera som statisk fil.
-- `sakerhetskrav.html` — kravkatalogen Säkerhetskrav K3.
+- `sakerhetskrav.html` — kravkatalogen Säkerhetskrav K3. Gäller generellt för
+  alla lösningar som hanterar K3-klassad information inom VOF/IAF. Sidan är
+  öppen men länkas inte från sprintsidan.
 - `favicon.svg` — sajtens favicon.
 
 ## Deploy

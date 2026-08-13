@@ -69,7 +69,6 @@
     transition: color 0.15s;
   }
   .nav-links a:hover { color: var(--navy); }
-  .nav-links a.las { color: var(--accent); font-weight: 600; }
   @media (max-width: 720px) { .nav-links { display: none; } }
 
   /* ---------- Hero ---------- */
@@ -86,7 +85,6 @@
     background: rgba(161, 45, 38, 0.35);
     padding: 6px 14px; border-radius: 4px; margin-bottom: 26px;
   }
-  .badge svg { width: 13px; height: 13px; flex-shrink: 0; }
   h1 {
     font-family: var(--serif);
     font-size: clamp(1.9rem, 4.5vw, 2.9rem);
@@ -260,7 +258,7 @@
 </style>
 </head>
 <body>
-<div class="klass-strip">Begränsad åtkomst · Intern styrande handling · Sundsvalls kommun</div>
+<div class="klass-strip">Intern styrande handling · Sundsvalls kommun</div>
 
 <nav>
   <div class="nav-inner">
@@ -271,14 +269,13 @@
     <div class="nav-links">
       <a href="#regelverk">Regelverk</a>
       <a href="#kategorifilter">Kravkatalog</a>
-      <a class="las" href="kod.html" id="las-sidan">Lås sidan</a>
     </div>
   </div>
 </nav>
 
 <header id="top">
   <div class="wrap">
-    <div class="badge"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 10V7a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="2" fill="none"/></svg> Begränsad åtkomst · Kravkatalog</div>
+    <div class="badge">Sundsvalls kommun · Kravkatalog</div>
     <h1>Säkerhetskrav för K3-klassad information</h1>
     <div class="class-chips">
       <span class="class-chip">K3 · Konfidentialitet — allvarliga konsekvenser vid röjande</span>
@@ -814,21 +811,12 @@
     </div>
     <div>
       <p class="mono">134 krav · 15 sektioner</p>
-      <p>Begränsad åtkomst — sidan är skyddad med åtkomstkod.</p>
     </div>
   </div>
 </footer>
 
 <script>
 (function () {
-  // Sidan nåddes med rätt kod — rensa ev. felförsöksflagga från kodsidan.
-  sessionStorage.removeItem('sakkod-forsok');
-
-  // "Lås sidan" rensar åtkomstkod-cookien innan man skickas till kodsidan.
-  document.getElementById('las-sidan').addEventListener('click', function () {
-    document.cookie = 'sakkod=; path=/; max-age=0';
-  });
-
   var chips = Array.prototype.slice.call(document.querySelectorAll('#kategorifilter .chip'));
   var allChip = document.querySelector('#kategorifilter .chip-all');
   var countEl = document.getElementById('filter-count');

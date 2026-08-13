@@ -1,0 +1,30 @@
+# Mall som processas av nginx-imagens entrypoint vid containerstart:
+# platshållaren för miljövariabeln SAKERHETSKRAV_KOD (sätts i DokPloy)
+# ersätts med dess värde och resultatet skrivs till
+# /etc/nginx/conf.d/default.conf.
+
+map $cookie_sakkod $sakkod_ok {
+    default 0;
+    "${SAKERHETSKRAV_KOD}" 1;
+}
+
+server {
+    listen 80;
+    server_name _;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # Säkerhetskravsidan kräver rätt åtkomstkod i cookien "sakkod".
+    # Utan rätt kod skickas besökaren till kodsidan — innehållet
+    # lämnar aldrig servern.
+    location = /sakerhetskrav.html {
+        if ($sakkod_ok = 0) {
+            return 302 /kod.html;
+        }
+        add_header Cache-Control "no-store";
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

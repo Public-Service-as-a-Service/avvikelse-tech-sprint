@@ -842,24 +842,26 @@
     <div class="kicker">öppna frågor</div>
     <h2>Frågor vi behöver reda ut</h2>
     <p class="section-intro">
-      Frågor som dykt upp under arbetet och som behöver ett svar. Varje fråga har en ägare
-      som ansvarar för att driva den framåt. Listan uppdateras löpande, även efter sprintveckan.
+      Frågor som dykt upp under arbetet och som behöver ett svar. Varje fråga behöver en ägare
+      som ansvarar för att driva den framåt — och det ansvaret ligger hos dem som leder det
+      utvecklingsinitiativ som syftar till att etablera avvikelsehanteringen: de utser ägare för
+      samtliga öppna frågor. Listan uppdateras löpande, även efter sprintveckan.
     </p>
     <div class="cards">
       <div class="card question">
         <h3><span class="icon">🧪</span> Testdata</h3>
         <p>Hur implementerar vi en generell hantering av testdata för alla processer inom VOF/IAF?</p>
-        <span class="q-owner">Niklas Rahm</span>
+        <span class="q-owner">ej utsedd ännu</span>
       </div>
       <div class="card question">
         <h3><span class="icon">🔒</span> Datasäkerhet &amp; K3-kraven</h3>
         <p>Lösningar för att minimera access till produktionsdata. Genomgången av <a href="sakerhetskrav.html">säkerhetskraven</a> (tors–fre) visade att det här är större än avvikelsehanteringen: ~100 krav som gäller all K3-klassad information, där vissa kräver andra delar av organisationen (kryptering i databas, separerade nätsegment) och andra ligger hos oss (audit-logg, maskning). Behöver bli ett eget initiativ med ett systematiskt arbetssätt — Kristin söker initiativägare. Angeläget inför Lifecare-införandet.</p>
-        <span class="q-owner">Pelle</span>
+        <span class="q-owner">ej utsedd ännu</span>
       </div>
       <div class="card question">
         <h3><span class="icon">🏗️</span> Support Management eller dedikerad tjänst?</h3>
         <p>Frågan ställdes på demon och diskuterades vidare på retron: var det rätt att bygga avvikelsehanteringen i Draken, eller hade en dedikerad applikation varit smidigare — inte minst för att kunna spridas till andra kommuner? Att bygga från noll tar avsevärt mycket längre tid: Support Management bär fem års löst arbete kring transaktionshantering, concurrency, pessimistiska läslås, konfliktdetektering och testverktyg, och det är mönster värda att återanvända. Samtidigt ökar komplexiteten ju mer distribuerat allt blir — vi har idag ingen transaktionshantering över tjänstegränser, så en operation som fallerar i fjärde steget av fem saknar återställning (köer är en tänkbar väg). Ekonomiskt bistånd testar den andra varianten med Care Management, en avknoppning av Support Management, på grund av direktintegrationen mot Lifecare. Nästa steg: bryt ut mer av det återanvändbara i dept44-biblioteken och utvärdera Care Management-spåret innan nästa gång frågan ställs.</p>
-        <span class="q-owner">Pelle</span>
+        <span class="q-owner">ej utsedd ännu</span>
       </div>
       <div class="card question">
         <h3><span class="icon">📈</span> Uppföljning &amp; analys</h3>
@@ -870,7 +872,7 @@
         <h3><span class="icon">🗂️</span> Metakatalogen &amp; organisationsförändringar</h3>
         <p>Delvis utredd (tis 11/8): källan används idag främst för fakturering och kontering, men vi kan bygga på en lokal kopia av den. Platser saknas dock helt — ingen mappning finns — och hanteras därför på vår sida. Kvar att avgöra: ska den vara master, och hur fångar vi upp organisationsförändringar? En laddningstjänst som synkar organisationsdata till AccessMapper dygnsvis ligger på todo.</p>
         <p>Efter slutdemon (fre 14/8): Masterdata och Metakatalogen är två skilda saker — Metakatalogen visar hur organisationen ser ut just nu, medan Masterdata är systemet för att genomföra verksamhetsförändringar med full historik (att två avdelningar slagits ihop går inte att utläsa ur en diff på trädet, men finns i Masterdata) och för att simulera en omorganisation innan den genomförs. Långsiktigt rätt lösning är därför att få in avdelningarna i källan i stället för att dekorera trädet på vår sida. Ett vidare spår: ett ”Masterdata 2.0” som även håller fysiska platser och anläggningsregister — där finns flera case än vårt, och det borde redas ut med Marcus Olsson och de som varit med i de tidigare platsdialogerna.</p>
-        <span class="q-owner">Pelle</span>
+        <span class="q-owner">ej utsedd ännu</span>
       </div>
       <div class="card question">
         <h3><span class="icon">🕓</span> Historik för behörigheter</h3>
@@ -880,7 +882,7 @@
       <div class="card question">
         <h3><span class="icon">🔀</span> Rätt förvaltning för dubbelanställda</h3>
         <p>Vikarier och timanställda kan vara anställda på både VOF och IAF och växla dag för dag — hur vet vi vart en avvikelse ska skickas? Möjliga källor: dagens schema från schemasystemet (styr redan bemanning och behörigheter, t.ex. medicinskåp) eller delade mobiler kopplade till boendet. Kortsiktigt kan rapportören få välja förvaltning själv. Utredningspunkt — löses inte denna vecka. Pelle kollar status på delade mobiler med Niklas Johansson.</p>
-        <span class="q-owner">Pelle</span>
+        <span class="q-owner">ej utsedd ännu</span>
       </div>
       <div class="card question">
         <h3><span class="icon">🌍</span> Språkstöd &amp; översättningar</h3>
@@ -890,7 +892,7 @@
       <div class="card question">
         <h3><span class="icon">🔎</span> Sök &amp; statistik</h3>
         <p>Sökningen är en rent teknisk fråga och ingen blocker — det går att handlägga och skapa ärenden ändå, och statistik kan i värsta fall tas fram genom att läsa ut alla ärenden och filtrera. Vi tror oss veta hur den ska lösas, men den är inte högprioriterad. Viktigt dock: formulärscheman behöver designas med sökbarhet i åtanke, och varje nyckel behöver en förklaring i verksamhetsspråk. Åtgärderna sparas så att de enkelt går att filtrera och sortera — det är grunden att bygga uppföljningen på (se frågan om uppföljning &amp; analys).</p>
-        <span class="q-owner">Pelle</span>
+        <span class="q-owner">ej utsedd ännu</span>
       </div>
       <div class="card question">
         <h3><span class="icon">🏢</span> Externa utförares användare</h3>

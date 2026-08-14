@@ -287,6 +287,10 @@
   .log-entry.pending::before { border-color: var(--panel-border); }
   .log-entry .log-date { font-family: var(--mono); font-size: 13px; color: var(--accent-2); margin-bottom: 4px; }
   .log-entry h3 { font-size: 1.02rem; margin-bottom: 6px; }
+  .log-entry h4 {
+    font-family: var(--mono); font-size: 12.5px; color: var(--accent);
+    margin: 20px 0 7px; letter-spacing: 0.03em;
+  }
   .log-entry p { font-size: 0.93rem; color: var(--text-dim); }
   .log-entry p + p { margin-top: 8px; }
   .log-entry .placeholder { font-style: italic; color: var(--text-faint); }
@@ -324,6 +328,8 @@
       <a href="#team">Team</a>
       <a href="#schema">Veckan</a>
       <a href="#logg">Sprintlogg</a>
+      <a href="#retro">Retro</a>
+      <a href="#restlista">Restlista</a>
       <a href="#fragor">Öppna frågor</a>
     </div>
   </div>
@@ -622,7 +628,7 @@
         <div class="day-label"><span class="name">Fredag</span><span class="date">14 aug</span></div>
         <div>
           <h3>Slutdemo &amp; retrospektiv 14:00–16:00</h3>
-          <p>Göra klart så långt det går och merga in bakom featureflaggor. På slutdemon visar vi behörighetsstyrningen live, sedan retro och riktning inför verksamhetssprintarna.</p>
+          <p>Göra klart så långt det går och merga in bakom featureflaggor. Slutdemo på eftermiddagen, sedan retro och riktning inför verksamhetssprintarna. (Vad demon landade i står i <a href="#logg">sprintloggen</a>.)</p>
         </div>
       </div>
     </div>
@@ -690,10 +696,142 @@
       <div class="log-entry">
         <div class="log-date">Fredag 14 aug</div>
         <h3>Slutspurt, slutdemo &amp; överlämning</h3>
-        <p>Standup på morgonen: fokus idag är att göra klart så långt det går inför slutdemon kl 14. Förhoppningen är att behörighetsstyrningen går i mål under dagen. På demon visar vi den live: två användare med olika behörighet ser och får göra olika saker — t.ex. att den ena får träff på alla ärenden i sökningen medan den andra bara ser sitt.</p>
-        <p>Både access-kontrollen och ärendehanteringen ligger bakom featureflaggor (avstängda som standard), så det är säkert att merga in i main. Det minimerar merge-konflikter när fler delar av teamet går in i koden under kommande sprintar.</p>
-        <p>Efter sprinten: nästa vecka är ingen sprintvecka — de gråa veckorna används för återhämtning och för att göra klart behörighetshanteringen i lugnare takt, mindre formaliserat. Verksamhetssprintarna drar igång vecka 36–37, med leverans vecka 43 i sikte. Behörighetsstyrningen är det viktigaste att ha på plats till dess — hela processen bygger på den, och fler processer kommer behöva den när vi skalar upp.</p>
-        <p class="placeholder">Resultat från slutdemo &amp; retro fylls på i eftermiddag…</p>
+        <p>Standup på morgonen: fokus på att göra klart så långt det går inför slutdemon kl 14. Både access-kontrollen och ärendehanteringen ligger bakom featureflaggor (avstängda som standard), så det var säkert att merga in i main. Det minimerar merge-konflikter när fler delar av teamet går in i koden under kommande sprintar.</p>
+
+        <h4>Slutdemon: nästan ända fram</h4>
+        <p><strong>Behörighetsstyrningen gick inte att visa live.</strong> Koden är skriven och deployad, men vi hann inte omfatta alla behörigheter — och när demot riggades hittade vi en bugg: AccessMapper går mot AD, och för en användare utan riktiga AD-grupper kommer ingenting alls tillbaka i stället för det vi förväntar oss. Planen att sidesteppa det genom att lägga behörigheterna på personnivå i stället för på grupp fungerade inte heller hela vägen. Bra att den hittades nu — den hinner åtgärdas innan nästa sprint.</p>
+        <p><strong>I stället blev det en teknisk genomgång av före och efter.</strong> Innan sprinten fanns en ärendefiltrering kopplad till den nya tjänsten AccessMapper: antingen fick du fram ett ärende eller så fick du det inte. Nu finns auktoriseringskontroll per resurs över hela API:et — 30–40 resurser — så att man t.ex. kan få läsa ärenderesursen men inte bilagorna, eller Communication-resursen men inte namespace-konfigurationen. Ovanpå det ligger rollbaserade attributrestriktioner: utifrån roll styrs exakt vad som släpps igenom i payloaden. Det sistnämnda visade sig matcha ett av säkerhetskraven som vi fick se först i efterhand. Allt är konfigurerbart (det blir mycket config) och täckt av automatiska tester — det är ingen hack-lösning. PR:en landade på ~7 500 rader, och motsvarande utökningar är gjorda i både AccessMapper och Support Management.</p>
+        <p>Rollstyrningen är förutsättningen för utredningsdelen, där flera handläggare med olika roller ska jobba på samma ärende samtidigt i var sin flik. Uppskattningsvis ~95 % är på plats; kvar är att koppla ihop delarna och testa hela kedjan med riktig data och riktiga testanvändare.</p>
+        <p><strong>Rapporteringsgränssnittet demades live</strong> för dem som inte sett det tidigare: vyn där rapportören ser sina inskickade ärenden och kan följa status, och formuläret där man väljer missförhållande eller avvikelse (verksamhetens egna termer — tröskeln för att rapportera ska vara så låg som möjligt). Inloggad rapportör får sin plats föreslagen utifrån anställningen och kan verifiera eller söka fram en annan — inklusive avdelningsnivå, som är nytt för den här veckan. Obligatoriska fält valideras, mobilvyn är en stegvis wizard i stället för en lång scroll, och man kan välja att logga ut direkt vid inskick eftersom man ofta jobbar på delade mobiler. Språkstöd (svenska och engelska) finns nu på plats. Bilagor och bilder är inte specat av verksamheten, men går att bygga om behovet finns.</p>
+        <p><strong>Handläggargränssnittet</strong> visades med ett nyss inkommet ärende: ärendeuppgifter, vem som rapporterat och eventuella andra parter, samt de nya utredningsformulären som växlar dynamiskt beroende på om det är ett missförhållande eller en avvikelse. Nytt är också fas-stödet — registrering, granskning, utredning — som hjälper handläggaren att se var i processen ärendet befinner sig och som på sikt ska styra vilka flikar som visas i respektive fas, så att man slipper hantera allt samtidigt. Åtgärderna, som utredningen ska mynna ut i och som en särskild roll ska besluta om, är påbörjade men inte införda ännu.</p>
+        <p><strong>Säkerhetskraven</strong> gicks igenom på <a href="sakerhetskrav.html">kravsidan</a>: ~100 krav sammanställda ur regelverken och våra egna styrdokument. De gäller all K3-klassad information, inte bara avvikelsehanteringen, och en del är redan uppfyllda medan mycket handlar om rutiner, organisation och styrning. Vissa krav kräver andra delar av organisationen (kryptering i databasen, separerade nätsegment), annat fixar vi själva (t.ex. audit-logg). Slutsatsen: det här behöver bli ett eget, systematiskt arbete ganska snart — mycket ska rullas ut för VOF och IAF i och med Lifecare-införandet. Kristin söker initiativägare.</p>
+        <p><strong>En viktig fråga lyftes av Peter Karlsson:</strong> uppföljningen av avvikelser är inte klarlagd. Det handlar inte om att räkna ärenden, utan om att se trender och om avvikelsehanteringen faktiskt leder till kvalitetsförbättringar — verksamhetens främsta skäl till att det här ska bli bättre än dagens verktyg. Se den öppna frågan nedan.</p>
+
+        <h4>Retro &amp; riktning</h4>
+        <p>Veckan har till stor del gått åt till teknik under kulisserna — nya tekniker vi inte haft tidigare, byggda så att de kan återanvändas i andra processer framöver (alkohol och tobak är ett exempel). Retrospektivet efter demon blev ovanligt positivt; hela genomgången finns under <a href="#retro">Retrospektiv</a>.</p>
+        <p>Efter sprinten: nästa vecka är ingen sprintvecka — de gråa veckorna används för återhämtning och för att beta av restlistan i lugnare takt, mindre formaliserat. Teamet fortsätter direkt på måndag medan allt fortfarande sitter i huvudet. Verksamhetssprintarna drar igång vecka 36–37, med leverans vecka 43 i sikte, och verksamheten deltar till stor del på distans eftersom de sitter utspridda. Behörighetsstyrningen är det viktigaste att ha på plats till dess — hela processen bygger på den, och fler processer kommer behöva den när vi skalar upp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="retro">
+  <div class="wrap">
+    <div class="kicker">retrospektiv</div>
+    <h2>Vad vi tar med oss</h2>
+    <p class="section-intro">
+      Efter slutdemon på fredagen höll teamet retro. Den blev ovanligt positiv — det brukar bli
+      tyst när frågan om vad som gått bra ställs, men här var det tvärtom. Det mesta som kom upp
+      handlar om själva arbetssättet snarare än om koden.
+    </p>
+
+    <h3 class="subhead">Det här fungerade</h3>
+    <div class="cards">
+      <div class="card">
+        <h3><span class="icon">🪑</span> Att sitta tillsammans</h3>
+        <p>Att lösa problem direkt i stället för var och en på sin kammare. Det räcker med att sitta i olika rum för att man ska klura vidare själv i onödan — tröskeln behöver inte vara hög för att bli ett hinder. Extra viktigt nu när AI-stödet gör att stegen blir större: ett felaktigt steg blir dyrare, och avstämning fångar det tidigt.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">👥</span> Två i backend</h3>
+        <p>Löpande review, någon att bolla lösningar med och möjlighet att dela upp arbetet. Värdet är störst i Support Management, som många andra system beror på och där ett misstag slår brett. För en fristående tjänst räcker det ofta med en — bemanningen får bedömas per sprint utifrån vad som faktiskt ska byggas.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🎯</span> Fokus utan sidospår</h3>
+        <p>Inga andra möten, inga andra projekt. En stor del av vinsten är just att slippa kontextväxla — den tiden går annars förlorad varje gång man byter projekt.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🧭</span> Mandat på plats</h3>
+        <p>Någon som kan bryta en metadiskussion, ta beslutet och låta teamet köra vidare. Frågan om avdelningar i organisationsträdet kunde ha stötts och blötts i timmar — i stället blev det ett beslut om manuell hantering tills vidare, och arbetet gick framåt.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🧠</span> Förarbetet fanns</h3>
+        <p>Ungefär 400 timmar var nedlagda på avvikelsehanteringen före sommaren — design, insikten att AccessMapper behövdes över huvud taget, organisationsträdet och möten med verksamheten om vilka roller som finns. Utan det hade uppstartssträckan blivit lång.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🚦</span> Ett tydligt mål</h3>
+        <p>Målbilden var enkel att förhålla sig till: få något som snurrar i testmiljön. Inte färdigt, men inte trasigt. Då är det bara att ta tag i det som står i vägen, utan att fråga om det ingår.</p>
+      </div>
+    </div>
+
+    <h3 class="subhead">Det här förbättrar vi till nästa gång</h3>
+    <div class="cards">
+      <div class="card question">
+        <h3><span class="icon">📋</span> Presentera spelreglerna vid uppstart</h3>
+        <p>Formatet kördes för första gången, men vad en teknisk sprint innebär presenterades aldrig: hur länge den pågår, att vi sitter tillsammans, vilka mandat teamet har, vems roll är vad, vem man frågar om vad — och vad som gäller när sprinten är slut. Fem minuter på uppstartsmötet hade räckt. Det gick bra ändå för att alla tog för sig, men ramen ska finnas nästa gång (och någon får gärna säga åt folk att läsa sprintsidan).</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🤝</span> Förankringssprint före tekniksprinten</h3>
+        <p>Alternativet till klassisk förstudie: sätt verksamhet och utveckling i samma rum i stället för ett dokument som skrivs av en förstudieledare, skickas vidare i flera led och till slut hamnar hos utvecklare som får gissa vad som menas. Då går det att ställa de tekniska frågorna på ett verksamhetsmässigt sätt, förstå processen på riktigt och läsa mellan raderna direkt. Det är den delen som är nyckeln — och den ger dessutom underlaget som saknas när tid ska estimeras.</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">⏳</span> Estimat och beställningsmodell</h3>
+        <p>Idag estimeras utifrån ett Jira-kort utan egentlig information om vad som ska göras — och att lova fel ser dåligt ut oavsett orsak. Bättre: grov prognos först, förfina den efter förankringen, och stoppa tidigt om omfattningen växer. På sikt hellre en prenumerationsmodell — ett antal utvecklare på heltid mot det som ger mest värde — än att boxa in arbetet per beställare och avdelning.</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🔁</span> Kontinuitet mellan sprintarna</h3>
+        <p>Mycket sitter i huvudet på dem som varit med — hur delarna hänger ihop och varför. Att bemanna nästa sprint med ett helt nytt team fungerar inte; det behöver finnas överlappning.</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🔋</span> Ett tempo som håller</h3>
+        <p>Veckan var rolig just för att man fick jobba nonstop med en sak — men det går inte att köra i det tempot hela tiden utan att bränna ut folk. Modellen är sprint följt av en lugnare period, och längden får anpassas: ibland två veckor tekniskt i sträck, ibland en vecka i taget.</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🖥️</span> Rigga sprinthörnan ordentligt</h3>
+        <p>Hörnet har blivit sprintplatsen — då bör den också vara rätt riggad: samma skärmuppsättning på varje plats (helst en 34-tumsskärm med en kabel som också laddar, i stället för dockor som krånglar), vettiga stolar och bord, och en whiteboard. Ingen ska få en sämre plats för att den kom sent.</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">⏱️</span> Enklare tidrapportering</h3>
+        <p>Tiden i sprinten rapporteras veckovis och formlöst till Claes — ett mejl räcker. Det är skönare än att splittra veckan på objekt- och aktivitetskoder som ändå inte mappar verkligheten, där ett arbete kan spänna över flera objekt. Även tiden mellan sprintarna räknas med, så att totalen för avvikelsehanteringen blir rättvisande.</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🧩</span> När är formatet rätt?</h3>
+        <p>En teknisk sprint är motiverad när det finns nya, tunga frågor att lösa mitt i en plattform som mycket annat beror på — som behörighetsstyrningen den här veckan. När det mest handlar om att återanvända mönster vi redan har räcker det med prepp veckan innan. Det är den bedömningen vi vill bli bättre på att göra i förväg.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="restlista">
+  <div class="wrap">
+    <div class="kicker">restlista</div>
+    <h2>Kvar att göra före verksamhetssprintarna</h2>
+    <p class="section-intro">
+      Det här tog vi inte i mål under veckan. Punkterna betas av under de två veckorna fram till
+      verksamhetssprintarna — det mesta är sådant som behöver funka tekniskt innan verksamheten
+      kan bidra, och som annars bromsar uppstarten av nästa sprint.
+    </p>
+    <div class="cards">
+      <div class="card">
+        <h3><span class="icon">🔐</span> Behörighetsstyrningen i mål</h3>
+        <p>Täppa till de edge-case som återstår, fixa AD-buggen från demot och testa hela kedjan skarpt med testanvändare. Högsta prioritet — allt annat bygger på den.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">👥</span> AD-grupper &amp; roller</h3>
+        <p>Grupper behöver beställas för alla typer av användare, inte bara ett par dummy-roller. Borde egentligen ha varit klart tidigt — utan dem går behörigheterna inte att testa på riktigt.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">⏱️</span> Schemajobb för anställningar</h3>
+        <p>Läsa in var personalen faktiskt jobbar från Metakatalogen till en egen cache, t.ex. en gång per dygn — det är anställningen som styr behörigheten, och uppslagen måste gå fort. Mappningen avgör nivå: enhetschef ser från nivå fyra och neråt, verksamhetschef från nivå två och neråt.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">➡️</span> Tilldelningslogik</h3>
+        <p>Att flytta ärenden mellan olika grupper av användare och mellan stadier, olika beroende på ärendetyp. Löst teoretiskt, inte byggt.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">✍️</span> Samtidig redigering</h3>
+        <p>Flera handläggare ska kunna jobba på och spara samma ärende samtidigt utan att skriva över varandra. Konfliktdetektering byggdes i somras men nyttjas inte ännu — behöver kopplas in och testas.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">✅</span> Åtgärder efter utredning</h3>
+        <p>Utredningen ska resultera i planerade åtgärder som en särskild roll beslutar om. Påbörjat, inte infört — och det är åtgärderna uppföljningen till stor del ska bygga på.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🏢</span> Avdelningar för IAF</h3>
+        <p>VOF:s avdelningar är inlagda, men för IAF har vi inget underlag ännu. Verksamheten håller dem i Excel — vi behöver få listan.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🛠️</span> Administrationsverktyg för omorganisationer</h3>
+        <p>Förvaltningarna omorganiserar ofta. Att slå ihop, byta namn på eller ta bort avdelningar ska gå att göra i ett gränssnitt — inte genom handskriven SQL.</p>
       </div>
     </div>
   </div>
@@ -705,7 +843,7 @@
     <h2>Frågor vi behöver reda ut</h2>
     <p class="section-intro">
       Frågor som dykt upp under arbetet och som behöver ett svar. Varje fråga har en ägare
-      som ansvarar för att driva den framåt. Listan uppdateras löpande under sprinten.
+      som ansvarar för att driva den framåt. Listan uppdateras löpande, även efter sprintveckan.
     </p>
     <div class="cards">
       <div class="card question">
@@ -714,13 +852,24 @@
         <span class="q-owner">Niklas Rahm</span>
       </div>
       <div class="card question">
-        <h3><span class="icon">🔒</span> Datasäkerhet</h3>
-        <p>Lösningar för att minimera access till produktionsdata.</p>
+        <h3><span class="icon">🔒</span> Datasäkerhet &amp; K3-kraven</h3>
+        <p>Lösningar för att minimera access till produktionsdata. Genomgången av <a href="sakerhetskrav.html">säkerhetskraven</a> (tors–fre) visade att det här är större än avvikelsehanteringen: ~100 krav som gäller all K3-klassad information, där vissa kräver andra delar av organisationen (kryptering i databas, separerade nätsegment) och andra ligger hos oss (audit-logg, maskning). Behöver bli ett eget initiativ med ett systematiskt arbetssätt — Kristin söker initiativägare. Angeläget inför Lifecare-införandet.</p>
         <span class="q-owner">Pelle</span>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🏗️</span> Support Management eller dedikerad tjänst?</h3>
+        <p>Frågan ställdes på demon och diskuterades vidare på retron: var det rätt att bygga avvikelsehanteringen i Draken, eller hade en dedikerad applikation varit smidigare — inte minst för att kunna spridas till andra kommuner? Att bygga från noll tar avsevärt mycket längre tid: Support Management bär fem års löst arbete kring transaktionshantering, concurrency, pessimistiska läslås, konfliktdetektering och testverktyg, och det är mönster värda att återanvända. Samtidigt ökar komplexiteten ju mer distribuerat allt blir — vi har idag ingen transaktionshantering över tjänstegränser, så en operation som fallerar i fjärde steget av fem saknar återställning (köer är en tänkbar väg). Ekonomiskt bistånd testar den andra varianten med Care Management, en avknoppning av Support Management, på grund av direktintegrationen mot Lifecare. Nästa steg: bryt ut mer av det återanvändbara i dept44-biblioteken och utvärdera Care Management-spåret innan nästa gång frågan ställs.</p>
+        <span class="q-owner">Pelle</span>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">📈</span> Uppföljning &amp; analys</h3>
+        <p>Lyft av Peter Karlsson på slutdemon: hur ska verksamheten följa upp avvikelser? Inte antal ärenden, utan trender och om hanteringen faktiskt leder till kvalitetsförbättringar — det är verksamhetens främsta skäl till att det här ska bli bättre än dagens verktyg. Verksamheten har varit diffus och förvaltningarna oense, och delarna är inte specade. Vår hållning: bygg enklare uppföljning systemnära och on demand i stället för nattliga uttag till Qlik — dels för att undvika att uttagen havererar när datamodellen ändras, dels för att K3-data inte utan vidare bör suga ut ur systemet omaskat. Utredarna som är vana vid Qlik får fortsatt göra det avancerade där. Tas upp med verksamheten inför nästa sprint — kan förlänga en sprint markant.</p>
+        <span class="q-owner">ej utsedd ännu</span>
       </div>
       <div class="card question">
         <h3><span class="icon">🗂️</span> Metakatalogen &amp; organisationsförändringar</h3>
         <p>Delvis utredd (tis 11/8): källan används idag främst för fakturering och kontering, men vi kan bygga på en lokal kopia av den. Platser saknas dock helt — ingen mappning finns — och hanteras därför på vår sida. Kvar att avgöra: ska den vara master, och hur fångar vi upp organisationsförändringar? En laddningstjänst som synkar organisationsdata till AccessMapper dygnsvis ligger på todo.</p>
+        <p>Efter slutdemon (fre 14/8): Masterdata och Metakatalogen är två skilda saker — Metakatalogen visar hur organisationen ser ut just nu, medan Masterdata är systemet för att genomföra verksamhetsförändringar med full historik (att två avdelningar slagits ihop går inte att utläsa ur en diff på trädet, men finns i Masterdata) och för att simulera en omorganisation innan den genomförs. Långsiktigt rätt lösning är därför att få in avdelningarna i källan i stället för att dekorera trädet på vår sida. Ett vidare spår: ett ”Masterdata 2.0” som även håller fysiska platser och anläggningsregister — där finns flera case än vårt, och det borde redas ut med Marcus Olsson och de som varit med i de tidigare platsdialogerna.</p>
         <span class="q-owner">Pelle</span>
       </div>
       <div class="card question">
@@ -740,7 +889,7 @@
       </div>
       <div class="card question">
         <h3><span class="icon">🔎</span> Sök &amp; statistik</h3>
-        <p>Sökningen är en rent teknisk fråga och ingen blocker — det går att handlägga och skapa ärenden ändå, och statistik kan i värsta fall tas fram genom att läsa ut alla ärenden och filtrera. Vi tror oss veta hur den ska lösas, men den är inte högprioriterad. Viktigt dock: formulärscheman behöver designas med sökbarhet i åtanke, och varje nyckel behöver en förklaring i verksamhetsspråk.</p>
+        <p>Sökningen är en rent teknisk fråga och ingen blocker — det går att handlägga och skapa ärenden ändå, och statistik kan i värsta fall tas fram genom att läsa ut alla ärenden och filtrera. Vi tror oss veta hur den ska lösas, men den är inte högprioriterad. Viktigt dock: formulärscheman behöver designas med sökbarhet i åtanke, och varje nyckel behöver en förklaring i verksamhetsspråk. Åtgärderna sparas så att de enkelt går att filtrera och sortera — det är grunden att bygga uppföljningen på (se frågan om uppföljning &amp; analys).</p>
         <span class="q-owner">Pelle</span>
       </div>
       <div class="card question">

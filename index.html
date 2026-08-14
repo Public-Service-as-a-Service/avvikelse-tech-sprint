@@ -328,6 +328,7 @@
       <a href="#team">Team</a>
       <a href="#schema">Veckan</a>
       <a href="#logg">Sprintlogg</a>
+      <a href="#retro">Retro</a>
       <a href="#restlista">Restlista</a>
       <a href="#fragor">Öppna frågor</a>
     </div>
@@ -707,8 +708,84 @@
         <p><strong>En viktig fråga lyftes av Peter Karlsson:</strong> uppföljningen av avvikelser är inte klarlagd. Det handlar inte om att räkna ärenden, utan om att se trender och om avvikelsehanteringen faktiskt leder till kvalitetsförbättringar — verksamhetens främsta skäl till att det här ska bli bättre än dagens verktyg. Se den öppna frågan nedan.</p>
 
         <h4>Retro &amp; riktning</h4>
-        <p>Veckan har till stor del gått åt till teknik under kulisserna — nya tekniker vi inte haft tidigare, byggda så att de kan återanvändas i andra processer framöver (alkohol och tobak är ett exempel). Lärdomar att ta med: förstudien med verksamheten borde ha gjorts innan utvecklingen av avvikelse startade, och att få något produktionsredo under en enda sprint är hårt — det behöver rymmas inne i sprinten i stället för att lämnas efteråt. Framöver följer vi också upp tiden vi lägger, även mellan sprintarna, så att totalen blir rättvisande.</p>
+        <p>Veckan har till stor del gått åt till teknik under kulisserna — nya tekniker vi inte haft tidigare, byggda så att de kan återanvändas i andra processer framöver (alkohol och tobak är ett exempel). Retrospektivet efter demon blev ovanligt positivt; hela genomgången finns under <a href="#retro">Retrospektiv</a>.</p>
         <p>Efter sprinten: nästa vecka är ingen sprintvecka — de gråa veckorna används för återhämtning och för att beta av restlistan i lugnare takt, mindre formaliserat. Teamet fortsätter direkt på måndag medan allt fortfarande sitter i huvudet. Verksamhetssprintarna drar igång vecka 36–37, med leverans vecka 43 i sikte, och verksamheten deltar till stor del på distans eftersom de sitter utspridda. Behörighetsstyrningen är det viktigaste att ha på plats till dess — hela processen bygger på den, och fler processer kommer behöva den när vi skalar upp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="retro">
+  <div class="wrap">
+    <div class="kicker">retrospektiv</div>
+    <h2>Vad vi tar med oss</h2>
+    <p class="section-intro">
+      Efter slutdemon på fredagen höll teamet retro. Den blev ovanligt positiv — det brukar bli
+      tyst när frågan om vad som gått bra ställs, men här var det tvärtom. Det mesta som kom upp
+      handlar om själva arbetssättet snarare än om koden.
+    </p>
+
+    <h3 class="subhead">Det här fungerade</h3>
+    <div class="cards">
+      <div class="card">
+        <h3><span class="icon">🪑</span> Att sitta tillsammans</h3>
+        <p>Att lösa problem direkt i stället för var och en på sin kammare. Det räcker med att sitta i olika rum för att man ska klura vidare själv i onödan — tröskeln behöver inte vara hög för att bli ett hinder. Extra viktigt nu när AI-stödet gör att stegen blir större: ett felaktigt steg blir dyrare, och avstämning fångar det tidigt.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">👥</span> Två i backend</h3>
+        <p>Löpande review, någon att bolla lösningar med och möjlighet att dela upp arbetet. Värdet är störst i Support Management, som många andra system beror på och där ett misstag slår brett. För en fristående tjänst räcker det ofta med en — bemanningen får bedömas per sprint utifrån vad som faktiskt ska byggas.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🎯</span> Fokus utan sidospår</h3>
+        <p>Inga andra möten, inga andra projekt. En stor del av vinsten är just att slippa kontextväxla — den tiden går annars förlorad varje gång man byter projekt.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🧭</span> Mandat på plats</h3>
+        <p>Någon som kan bryta en metadiskussion, ta beslutet och låta teamet köra vidare. Frågan om avdelningar i organisationsträdet kunde ha stötts och blötts i timmar — i stället blev det ett beslut om manuell hantering tills vidare, och arbetet gick framåt.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🧠</span> Förarbetet fanns</h3>
+        <p>Ungefär 400 timmar var nedlagda på avvikelsehanteringen före sommaren — design, insikten att AccessMapper behövdes över huvud taget, organisationsträdet och möten med verksamheten om vilka roller som finns. Utan det hade uppstartssträckan blivit lång.</p>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🚦</span> Ett tydligt mål</h3>
+        <p>Målbilden var enkel att förhålla sig till: få något som snurrar i testmiljön. Inte färdigt, men inte trasigt. Då är det bara att ta tag i det som står i vägen, utan att fråga om det ingår.</p>
+      </div>
+    </div>
+
+    <h3 class="subhead">Det här förbättrar vi till nästa gång</h3>
+    <div class="cards">
+      <div class="card question">
+        <h3><span class="icon">📋</span> Presentera spelreglerna vid uppstart</h3>
+        <p>Formatet kördes för första gången, men vad en teknisk sprint innebär presenterades aldrig: hur länge den pågår, att vi sitter tillsammans, vilka mandat teamet har, vems roll är vad, vem man frågar om vad — och vad som gäller när sprinten är slut. Fem minuter på uppstartsmötet hade räckt. Det gick bra ändå för att alla tog för sig, men ramen ska finnas nästa gång (och någon får gärna säga åt folk att läsa sprintsidan).</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🤝</span> Förankringssprint före tekniksprinten</h3>
+        <p>Alternativet till klassisk förstudie: sätt verksamhet och utveckling i samma rum i stället för ett dokument som skrivs av en förstudieledare, skickas vidare i flera led och till slut hamnar hos utvecklare som får gissa vad som menas. Då går det att ställa de tekniska frågorna på ett verksamhetsmässigt sätt, förstå processen på riktigt och läsa mellan raderna direkt. Det är den delen som är nyckeln — och den ger dessutom underlaget som saknas när tid ska estimeras.</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">⏳</span> Estimat och beställningsmodell</h3>
+        <p>Idag estimeras utifrån ett Jira-kort utan egentlig information om vad som ska göras — och att lova fel ser dåligt ut oavsett orsak. Bättre: grov prognos först, förfina den efter förankringen, och stoppa tidigt om omfattningen växer. På sikt hellre en prenumerationsmodell — ett antal utvecklare på heltid mot det som ger mest värde — än att boxa in arbetet per beställare och avdelning.</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🔁</span> Kontinuitet mellan sprintarna</h3>
+        <p>Mycket sitter i huvudet på dem som varit med — hur delarna hänger ihop och varför. Att bemanna nästa sprint med ett helt nytt team fungerar inte; det behöver finnas överlappning.</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🔋</span> Ett tempo som håller</h3>
+        <p>Veckan var rolig just för att man fick jobba nonstop med en sak — men det går inte att köra i det tempot hela tiden utan att bränna ut folk. Modellen är sprint följt av en lugnare period, och längden får anpassas: ibland två veckor tekniskt i sträck, ibland en vecka i taget.</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🖥️</span> Rigga sprinthörnan ordentligt</h3>
+        <p>Hörnet har blivit sprintplatsen — då bör den också vara rätt riggad: samma skärmuppsättning på varje plats (helst en 34-tumsskärm med en kabel som också laddar, i stället för dockor som krånglar), vettiga stolar och bord, och en whiteboard. Ingen ska få en sämre plats för att den kom sent.</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">⏱️</span> Enklare tidrapportering</h3>
+        <p>Tiden i sprinten rapporteras veckovis och formlöst till Claes — ett mejl räcker. Det är skönare än att splittra veckan på objekt- och aktivitetskoder som ändå inte mappar verkligheten, där ett arbete kan spänna över flera objekt. Även tiden mellan sprintarna räknas med, så att totalen för avvikelsehanteringen blir rättvisande.</p>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🧩</span> När är formatet rätt?</h3>
+        <p>En teknisk sprint är motiverad när det finns nya, tunga frågor att lösa mitt i en plattform som mycket annat beror på — som behörighetsstyrningen den här veckan. När det mest handlar om att återanvända mönster vi redan har räcker det med prepp veckan innan. Det är den bedömningen vi vill bli bättre på att göra i förväg.</p>
       </div>
     </div>
   </div>
@@ -777,6 +854,11 @@
       <div class="card question">
         <h3><span class="icon">🔒</span> Datasäkerhet &amp; K3-kraven</h3>
         <p>Lösningar för att minimera access till produktionsdata. Genomgången av <a href="sakerhetskrav.html">säkerhetskraven</a> (tors–fre) visade att det här är större än avvikelsehanteringen: ~100 krav som gäller all K3-klassad information, där vissa kräver andra delar av organisationen (kryptering i databas, separerade nätsegment) och andra ligger hos oss (audit-logg, maskning). Behöver bli ett eget initiativ med ett systematiskt arbetssätt — Kristin söker initiativägare. Angeläget inför Lifecare-införandet.</p>
+        <span class="q-owner">Pelle</span>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🏗️</span> Support Management eller dedikerad tjänst?</h3>
+        <p>Frågan ställdes på demon och diskuterades vidare på retron: var det rätt att bygga avvikelsehanteringen i Draken, eller hade en dedikerad applikation varit smidigare — inte minst för att kunna spridas till andra kommuner? Att bygga från noll tar avsevärt mycket längre tid: Support Management bär fem års löst arbete kring transaktionshantering, concurrency, pessimistiska läslås, konfliktdetektering och testverktyg, och det är mönster värda att återanvända. Samtidigt ökar komplexiteten ju mer distribuerat allt blir — vi har idag ingen transaktionshantering över tjänstegränser, så en operation som fallerar i fjärde steget av fem saknar återställning (köer är en tänkbar väg). Ekonomiskt bistånd testar den andra varianten med Care Management, en avknoppning av Support Management, på grund av direktintegrationen mot Lifecare. Nästa steg: bryt ut mer av det återanvändbara i dept44-biblioteken och utvärdera Care Management-spåret innan nästa gång frågan ställs.</p>
         <span class="q-owner">Pelle</span>
       </div>
       <div class="card question">

@@ -411,7 +411,7 @@
       <div class="flow-step">
         <div class="num">[04]</div>
         <h3>Verksamhetssprintar</h3>
-        <p>Fokuserade utvecklingssprintar tillsammans med verksamheten som löser behoven hela vägen.</p>
+        <p>Fokuserade utvecklingssprintar tillsammans med verksamheten som löser behoven hela vägen. Start vecka 36–37, leverans vecka 43.</p>
       </div>
     </div>
   </div>
@@ -614,15 +614,15 @@
       <div class="day">
         <div class="day-label"><span class="name">Torsdag</span><span class="date">13 aug</span></div>
         <div>
-          <h3>Fortsatt utveckling</h3>
-          <p>Detta bestäms senare.</p>
+          <h3>Säkerhetskrav &amp; fortsatt bygge</h3>
+          <p>Genomgång av säkerhetskraven och påbörjad datasäkerhetslösning. Platser på avdelningsnivå, språkstöd och behörighetsstyrning byggs vidare.</p>
         </div>
       </div>
       <div class="day">
         <div class="day-label"><span class="name">Fredag</span><span class="date">14 aug</span></div>
         <div>
           <h3>Slutdemo &amp; retrospektiv 14:00–16:00</h3>
-          <p>Detta bestäms senare.</p>
+          <p>Göra klart så långt det går och merga in bakom featureflaggor. På slutdemon visar vi behörighetsstyrningen live, sedan retro och riktning inför verksamhetssprintarna.</p>
         </div>
       </div>
     </div>
@@ -679,15 +679,21 @@
         <p>Vi släpper organisationsträds-stöket för stunden — fokus på att komma så långt att vi har något bra att visa på halvtidsdemon i eftermiddag.</p>
         <p>Backend fortsätter med regelverk och behörighetsstyrning. Frontend sätter upp VOF parallellt med IAF (samma funktionalitet men åtskilda organisationsträd — den som är inloggad för VOF ska inte se IAF:s träd och tvärtom), och alla labels/platser (Backend) ska in även om listorna inte är korrekta än — det måste gå att lägga ärenden — och AccessMapper används likaså med den data som finns. Testanvändarna stäms av med Henrik.</p>
       </div>
-      <div class="log-entry pending">
+      <div class="log-entry">
         <div class="log-date">Torsdag 13 aug</div>
-        <h3>End-to-end</h3>
-        <p class="placeholder">Fylls på under sprinten…</p>
+        <h3>Säkerhetskrav, platser &amp; språkstöd</h3>
+        <p>Vi tröskade igenom en stor mängd <a href="sakerhetskrav.html">säkerhetskrav</a> och påbörjade ett arbete kring datasäkerheten som förmodligen blir ett eget projekt — det är generellt och gäller fler processer än avvikelsehanteringen (t.ex. ekonomiskt bistånd och det som ska göras via Mina sidor vid införandet av det nya välfärdssystemet).</p>
+        <p>Platser och labels: det går nu att välja plats på avdelningsnivå, och platsen föreslås utifrån rapportörens anställning. Riktiga avdelningar är inlagda, och tack vare config-skriptet kan samma uppsättning läggas in i testmiljön med en knapptryckning när det är dags.</p>
+        <p>Språkstöd finns nu i både applikationen och språk-JSON:en — svenska och engelska än så länge, och fler språk kan enkelt läggas till. Översättningarna är AI-genererade och behöver granskas av verksamheten. Benämningar som kommer från API:t (t.ex. rollen "Rapportör") översätts dock inte ännu.</p>
+        <p>Behörighetsstyrningen växte rejält: auktoriseringen visade sig bara täcka ärenderesurserna, så ytterligare 14 resurser fick skyddas — bland annat admin-resurserna som styr själva access-kontrollen. Nu är den nära klar. Riktig AD-koppling till AccessMapper hinns inte med i sprinten; behörigheter läggs i stället in lokalt i AccessMapper, med stödet som byggdes i måndags.</p>
       </div>
-      <div class="log-entry pending">
+      <div class="log-entry">
         <div class="log-date">Fredag 14 aug</div>
-        <h3>Demo &amp; överlämning</h3>
-        <p class="placeholder">Fylls på under sprinten…</p>
+        <h3>Slutspurt, slutdemo &amp; överlämning</h3>
+        <p>Standup på morgonen: fokus idag är att göra klart så långt det går inför slutdemon kl 14. Förhoppningen är att behörighetsstyrningen går i mål under dagen. På demon visar vi den live: två användare med olika behörighet ser och får göra olika saker — t.ex. att den ena får träff på alla ärenden i sökningen medan den andra bara ser sitt.</p>
+        <p>Både access-kontrollen och ärendehanteringen ligger bakom featureflaggor (avstängda som standard), så det är säkert att merga in i main. Det minimerar merge-konflikter när fler delar av teamet går in i koden under kommande sprintar.</p>
+        <p>Efter sprinten: nästa vecka är ingen sprintvecka — de gråa veckorna används för återhämtning och för att göra klart behörighetshanteringen i lugnare takt, mindre formaliserat. Verksamhetssprintarna drar igång vecka 36–37, med leverans vecka 43 i sikte. Behörighetsstyrningen är det viktigaste att ha på plats till dess — hela processen bygger på den, och fler processer kommer behöva den när vi skalar upp.</p>
+        <p class="placeholder">Resultat från slutdemo &amp; retro fylls på i eftermiddag…</p>
       </div>
     </div>
   </div>
@@ -714,7 +720,7 @@
       </div>
       <div class="card question">
         <h3><span class="icon">🗂️</span> Metakatalogen &amp; organisationsförändringar</h3>
-        <p>Delvis utredd (tis 11/8): källan används idag främst för fakturering och kontering, men vi kan bygga på en lokal kopia av den. Platser saknas dock helt — ingen mappning finns — och hanteras därför på vår sida. Kvar att avgöra: ska den vara master, och hur fångar vi upp organisationsförändringar — manuellt eller via en loader-tjänst/schemajobb som synkar organisationsdata till AccessMapper?</p>
+        <p>Delvis utredd (tis 11/8): källan används idag främst för fakturering och kontering, men vi kan bygga på en lokal kopia av den. Platser saknas dock helt — ingen mappning finns — och hanteras därför på vår sida. Kvar att avgöra: ska den vara master, och hur fångar vi upp organisationsförändringar? En laddningstjänst som synkar organisationsdata till AccessMapper dygnsvis ligger på todo.</p>
         <span class="q-owner">Pelle</span>
       </div>
       <div class="card question">
@@ -725,6 +731,16 @@
       <div class="card question">
         <h3><span class="icon">🔀</span> Rätt förvaltning för dubbelanställda</h3>
         <p>Vikarier och timanställda kan vara anställda på både VOF och IAF och växla dag för dag — hur vet vi vart en avvikelse ska skickas? Möjliga källor: dagens schema från schemasystemet (styr redan bemanning och behörigheter, t.ex. medicinskåp) eller delade mobiler kopplade till boendet. Kortsiktigt kan rapportören få välja förvaltning själv. Utredningspunkt — löses inte denna vecka. Pelle kollar status på delade mobiler med Niklas Johansson.</p>
+        <span class="q-owner">Pelle</span>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🌍</span> Språkstöd &amp; översättningar</h3>
+        <p>Svenska och engelska finns på plats med AI-genererade översättningar — verksamheten behöver granska benämningarna och avgöra vilka fler språk som ska stödjas. Benämningar från API:t (t.ex. rollen "Rapportör") översätts inte idag. Databasen är UTF-8 så t.ex. arabiska och kinesiska bör fungera i applikationen, men SMS på arabiska har tidigare stoppats hos operatören.</p>
+        <span class="q-owner">ej utsedd ännu</span>
+      </div>
+      <div class="card question">
+        <h3><span class="icon">🔎</span> Sök &amp; statistik</h3>
+        <p>Sökningen är en rent teknisk fråga och ingen blocker — det går att handlägga och skapa ärenden ändå, och statistik kan i värsta fall tas fram genom att läsa ut alla ärenden och filtrera. Vi tror oss veta hur den ska lösas, men den är inte högprioriterad. Viktigt dock: formulärscheman behöver designas med sökbarhet i åtanke, och varje nyckel behöver en förklaring i verksamhetsspråk.</p>
         <span class="q-owner">Pelle</span>
       </div>
       <div class="card question">
